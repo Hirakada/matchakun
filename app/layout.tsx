@@ -1,9 +1,21 @@
 import "./globals.css";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { Inter, Baloo_2 } from "next/font/google";
 
-export const metadata = {
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const baloo = Baloo_2({
+  subsets: ["latin"],
+  variable: "--font-baloo",
+});
+
+export const metadata: Metadata = {
   title: "Matcha Kun",
-  description: "Modern matcha for everyday energy",
+  description: "Modern matcha for everyday energy.",
 };
 
 export default function RootLayout({
@@ -13,7 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white text-black">
+      <body
+        className={`${inter.variable} ${baloo.variable} font-sans bg-neutral-white text-neutral-black antialiased`}
+      >
         <Navbar />
         <main className="pt-16">{children}</main>
       </body>
