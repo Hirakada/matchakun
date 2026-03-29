@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Button from "@/components/Button";
+import TypingAnimation from "@/components/Typing";
 
 export default function Home() {
   return (
@@ -13,20 +14,29 @@ export default function Home() {
             <h1 className="font-heading text-h1 leading-tight">
               Matcha Kun
               <br />
-              <span className="text-brand-300">
-                For Modern Living
-              </span>
+              <div className="flex gap-2">
+                <span className="text-brand-300">
+                  For
+                </span>
+                <TypingAnimation
+                  strings={[
+                    "Everyday Energy",
+                    "Lively Focus",
+                    "Modern Living",
+                  ]}
+                  loop={true}
+                />
+              </div>
             </h1>
 
             <p className="text-body max-w-md mx-auto md:mx-0 opacity-90">
-              Clean energy, smooth focus, and a refreshing taste.
-              Discover your perfect matcha ritual with Matcha Kun.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tristique purus id dui gravida, lobortis iaculis velit facilisis. Donec interdum mi non dignissim rhoncus. Etiam arcu magna, vestibulum quis eros.
             </p>
 
             <div className="flex gap-4 justify-center md:justify-start">
               <Button
                 variant="cta"
-                href="https://ig.me/m/matchakun.id"
+                href="https://www.instagram.com/matchakun.id/"
               >
                 Order Now
               </Button>
@@ -58,10 +68,10 @@ export default function Home() {
         <div className="max-w-container mx-auto px-6 md:px-12">
 
           <h2 className="font-heading text-h2 text-center mb-12">
-            Why Choose Matcha Kun?
+            Matcha Kun ꨄ︎
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-1 gap-10">
 
             <div className="text-center space-y-3">
               <div className="bg-brand-300 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto">
@@ -69,42 +79,13 @@ export default function Home() {
               </div>
 
               <h3 className="font-heading text-h3">
-                Premium Quality
+                Ceremonial Quality
               </h3>
 
               <p className="text-body opacity-80">
-                We source only the finest matcha leaves for a smooth and vibrant taste.
+                Experience the authentic taste of ceremonial matcha, crafted with care and precision.
               </p>
             </div>
-
-            <div className="text-center space-y-3">
-              <div className="bg-brand-300 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                <span className="text-xl">🌱</span>
-              </div>
-
-              <h3 className="font-heading text-h3">
-                Sustainable Sourcing
-              </h3>
-
-              <p className="text-body opacity-80">
-                Ethically sourced matcha that supports fair and sustainable practices.
-              </p>
-            </div>
-
-            <div className="text-center space-y-3">
-              <div className="bg-brand-300 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                <span className="text-xl">💚</span>
-              </div>
-
-              <h3 className="font-heading text-h3">
-                Health Benefits
-              </h3>
-
-              <p className="text-body opacity-80">
-                Rich in antioxidants and L-theanine for calm, focused energy.
-              </p>
-            </div>
-
           </div>
         </div>
       </section>
