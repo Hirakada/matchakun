@@ -1,0 +1,19 @@
+{
+  "name": "Matcha Kun",
+  "short_name": "Matcha",
+  "icons": [
+    {
+      "src": "/icons/logo/android-chrome-brand-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/logo/android-chrome-brand-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#4f6f2f",
+  "background_color": "#fefefe",
+  "display": "standalone"
+}
