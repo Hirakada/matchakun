@@ -42,7 +42,7 @@ export default function Home() {
             <div className="absolute w-72 h-72 bg-brand-300 rounded-full blur-3xl opacity-30"></div>
 
             <Image
-              src="/matcha.png"
+              src="/wordmark.svg"
               alt="Matcha Drink"
               width={400}
               height={400}
