@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* 🎨 Design System (Tailwind v4 way) */
 @theme {
   /* Colors */
   --color-brand-300: #8DBE4F;
@@ -31,7 +30,7 @@ body {
 body {
   background-color: var(--color-neutral-white);
   color: var(--color-neutral-black);
-  font-family: var(--font-sans);
+  font-family: var(--font-inter);
 }
 
 * {
@@ -55,4 +54,12 @@ img {
 ::selection {
   background-color: var(--color-brand-300);
   color: white;
+}
+
+.font-baloo {
+  font-family: var(--font-baloo);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
 }

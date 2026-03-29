@@ -16,7 +16,7 @@ const baloo = Baloo_2({
 
 export const metadata: Metadata = {
   title: "Matcha Kun",
-  description: "Modern matcha for everyday energy.",
+  description: "Matcha for Modern Living",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${baloo.variable} font-sans bg-neutral-white text-neutral-black antialiased`}
+        className={`${inter.variable} ${baloo.variable} bg-neutral-white text-neutral-black antialiased`}
       >
         <Navbar />
         <main className="pt-16">{children}</main>
