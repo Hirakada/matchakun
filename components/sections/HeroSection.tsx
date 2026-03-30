@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Button from "@/components/Button";
-import TypingAnimation from "@/components/Typing";
+import Button from "@/components/ui/Button";
+import TypingAnimation from "@/components/ui/Typing";
 
 import { MatchaItem } from "@/data/matchaMenu";
 import { motion, AnimatePresence } from "framer-motion";

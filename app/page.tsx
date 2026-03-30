@@ -11,14 +11,17 @@ export default function Home() {
   const [active, setActive] = useState<MatchaItem>(matchaMenu[0]);
 
   return (
-    <>
+    <main className="relative z-10 bg-transparent">
+      {/* HERO — TANPA ANIMASI */}
       <HeroSection
         active={active}
         setActive={setActive}
         menu={matchaMenu}
       />
+
+      {/* SECTION LAIN (boleh tetap animasi kalau mau) */}
       <ValueSection />
       <CTASection />
-    </>
+    </main>
   );
 }
