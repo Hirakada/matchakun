@@ -83,7 +83,7 @@ export default function Navbar() {
         }
       `}
     >
-      <div className="max-w-300 mx-auto px-4 md:px-12 py-4 flex items-center justify-between">
+      <div className="max-w-300 mx-auto px-4 lg:px-12 py-4 flex items-center justify-between">
 
         {/* LOGO */}
         <Link href="/" className="flex items-center">
@@ -92,13 +92,13 @@ export default function Navbar() {
             alt="Matcha Kun"
             width={240}
             height={48}
-            className="h-9 md:h-12 w-auto transition-all duration-500"
+            className="h-9 lg:h-12 w-auto transition-all duration-500"
             priority
           />
         </Link>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex items-center gap-6 text-body-sm font-heading">
+        <div className="hidden lg:flex items-center gap-6 text-body-sm font-heading">
           <LinkText
             href="/menu"
             className={`
@@ -125,7 +125,7 @@ export default function Navbar() {
         {/* MOBILE BUTTON */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden ml-2 relative z-50"
+          className="lg:hidden ml-2 relative z-50"
         >
           <div className="space-y-1">
             <span
@@ -150,7 +150,7 @@ export default function Navbar() {
       {/* MOBILE FLYOUT */}
       <div
         className={`
-          md:hidden absolute top-full right-4 mt-2 w-64 origin-top-right
+          lg:hidden absolute top-full right-4 mt-2 w-64 origin-top-right
           transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
           ${
             isOpen

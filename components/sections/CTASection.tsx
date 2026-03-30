@@ -3,7 +3,7 @@ import Button from "@/components/ui/Button";
 export default function CTASection() {
   return (
     <section className="py-24">
-      <div className="max-w-container mx-auto px-6 md:px-12 text-center">
+      <div className="max-w-container mx-auto px-6 lg:px-12 text-center">
         <h2 className="font-heading text-h2 mb-6">
           Join the Matcha Movement
         </h2>
