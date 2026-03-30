@@ -13,6 +13,7 @@ export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(!isHome);
   const [animating, setAnimating] = useState<"down" | "up" | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -43,7 +44,7 @@ export default function Navbar() {
 
             setTimeout(() => {
               setScrolled(false);
-            }, 100); // sesuai duration navbar-up
+            }, 100);
           }
         }
 
@@ -84,23 +85,23 @@ export default function Navbar() {
     >
       <div className="max-w-300 mx-auto px-4 md:px-12 py-4 flex items-center justify-between">
 
+        {/* LOGO */}
         <Link href="/" className="flex items-center">
           <Image
-            src={scrolled ? "images/wordmark.svg" : "images/wordmark.svg"}
+            src="images/wordmark.svg"
             alt="Matcha Kun"
             width={240}
             height={48}
-            className="h-10 md:h-12 w-auto transition-all duration-500"
+            className="h-9 md:h-12 w-auto transition-all duration-500"
             priority
           />
         </Link>
 
-        <div className="flex items-center gap-4 md:gap-6 text-body-sm font-heading">
-
+        {/* DESKTOP MENU */}
+        <div className="hidden md:flex items-center gap-6 text-body-sm font-heading">
           <LinkText
             href="/menu"
             className={`
-              hidden sm:inline-block
               transition-colors duration-300
               ${
                 scrolled
@@ -119,15 +120,74 @@ export default function Navbar() {
           >
             Contact Us
           </Button>
+        </div>
 
-          <button className="sm:hidden ml-2">
-            <div className="space-y-1">
-              <span className={`block w-5 h-0.5 transition ${scrolled ? "bg-neutral-black" : "bg-white"}`} />
-              <span className={`block w-5 h-0.5 transition ${scrolled ? "bg-neutral-black" : "bg-white"}`} />
-              <span className={`block w-5 h-0.5 transition ${scrolled ? "bg-neutral-black" : "bg-white"}`} />
-            </div>
-          </button>
+        {/* MOBILE BUTTON */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden ml-2 relative z-50"
+        >
+          <div className="space-y-1">
+            <span
+              className={`block w-5 h-0.5 transition ${
+                scrolled ? "bg-neutral-black" : "bg-white"
+              }`}
+            />
+            <span
+              className={`block w-5 h-0.5 transition ${
+                scrolled ? "bg-neutral-black" : "bg-white"
+              }`}
+            />
+            <span
+              className={`block w-5 h-0.5 transition ${
+                scrolled ? "bg-neutral-black" : "bg-white"
+              }`}
+            />
+          </div>
+        </button>
+      </div>
 
+      {/* MOBILE FLYOUT */}
+      <div
+        className={`
+          md:hidden absolute top-full right-4 mt-2 w-64 origin-top-right
+          transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+          ${
+            isOpen
+              ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+              : "opacity-0 -translate-y-4 scale-95 pointer-events-none"
+          }
+        `}
+      >
+        <div
+          className={`
+            rounded-2xl p-5 flex flex-col items-center text-center gap-5
+            shadow-[0_20px_60px_rgba(0,0,0,0.25)]
+            ${
+              scrolled
+                ? "bg-neutral-white/90 backdrop-blur-md"
+                : "bg-black/70 backdrop-blur-md"
+            }
+          `}
+        >
+          <Link
+            href="/menu"
+            onClick={() => setIsOpen(false)}
+            className={`
+              w-full text-center transition
+              ${scrolled ? "text-neutral-black" : "text-white"}
+            `}
+          >
+            Know Your Matcha!
+          </Link>
+
+          <Button
+            variant="default"
+            href="https://ig.me/m/matchakun.id"
+            className="w-full bg-neutral-black text-white justify-center"
+          >
+            Contact Us
+          </Button>
         </div>
       </div>
     </nav>
