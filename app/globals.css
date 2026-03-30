@@ -14,27 +14,65 @@
 
   --color-cream-100: #F4F1E8;
 
-  /* Typography */
+  /* Fonts */
   --font-heading: var(--font-baloo);
   --font-sans: var(--font-inter);
 
-  --text-h1: 48px;
-  --text-h1-line-height: 56px;
+  /* ===== GOLDEN RATIO SCALE ===== */
 
-  --text-h2: 36px;
-  --text-h2-line-height: 44px;
-
-  --text-h3: 28px;
-  --text-h3-line-height: 36px;
-
+  /* Body */
   --text-body: 16px;
-  --text-body-line-height: 24px;
+  --text-body-line-height: 26px;
 
   --text-body-sm: 14px;
-  --text-body-sm-line-height: 20px;
+  --text-body-sm-line-height: 22px;
 
-  /* Spacing system */
+  /* Headings */
+  --text-h3: 28px;
+  --text-h3-line-height: 44px;
+
+  --text-h2: 44px;
+  --text-h2-line-height: 64px;
+
+  --text-h1: 64px;
+  --text-h1-line-height: 80px;
+
+  /* Button */
+  --text-button: 14px;
+  --text-button-line-height: 20px;
+
+  /* Spacing */
   --spacing: 0.25rem;
+}
+
+@keyframes navbar-down {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes navbar-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+.animate-navbar-down {
+  animation: navbar-down 0.3s ease-out;
+}
+
+.animate-navbar-up {
+  animation: navbar-up 0.1s ease-in;
 }
 
 html,

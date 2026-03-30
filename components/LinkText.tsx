@@ -1,3 +1,5 @@
+"use client";
+
 import NextLink from "next/link";
 
 type LinkTextProps = {
@@ -20,11 +22,10 @@ export default function LinkText({
 
   const variants = {
     navigation:
-      "text-neutral-black " +
       "after:content-[''] after:absolute after:left-1/2 after:-translate-x-1/2 after:-bottom-1 " +
-      "after:h-[2px] after:w-0 after:bg-brand-300 " +
+      "after:h-[2px] after:w-0 after:bg-current " +
       "after:transition-all after:duration-300 after:ease-out " +
-      "hover:after:w-full hover:text-brand-500",
+      "hover:after:w-full",
 
     hyperlink:
       "text-brand-500 underline underline-offset-4 hover:text-brand-700",
