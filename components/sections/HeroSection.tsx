@@ -179,7 +179,7 @@ export default function HeroSection({
                         <button
                         key={item.id}
                         onClick={() => setActive(item)}
-                        className="relative px-3 py-1.5 text-xs font-medium rounded-full border border-white/20 transition duration-200 hover:scale-95"
+                        className="hidden lg:block relative px-3 py-1.5 text-xs font-medium rounded-full border border-white/20 transition duration-200 hover:scale-95"
                         >
                         {isActive && (
                             <motion.span
