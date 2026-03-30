@@ -160,7 +160,7 @@ img {
 
 ::selection {
   background-color: var(--color-brand-300);
-  color: white;
+  color: var(--color-neutral-white);
 }
 
 .font-baloo {
