@@ -9,13 +9,12 @@ export default function useScrollDirection() {
     let lastY = window.scrollY;
     let ticking = false;
 
-    const THRESHOLD = 10; // 🔥 penting (hindari micro scroll)
+    const THRESHOLD = 10;
 
     const update = () => {
       const currentY = window.scrollY;
       const delta = currentY - lastY;
 
-      // ignore small movement
       if (Math.abs(delta) < THRESHOLD) {
         ticking = false;
         return;

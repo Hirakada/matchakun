@@ -19,61 +19,83 @@ function Card({
 }) {
   return (
     <SpotlightCard className="h-full">
-      <div className="
-        group relative h-full flex flex-col justify-between
+      <div
+        className="
+        group relative h-full flex flex-col
         text-center p-8 rounded-3xl
         
         backdrop-blur-xl
         bg-neutral-black/95
         
-        border border-white/10
+        border border-neutral-white/10
         
         shadow-[0_10px_30px_rgba(0,0,0,0.25)]
         
-        text-white
+        text-neutral-white
         
         transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
         
         hover:-translate-y-3
         hover:scale-[1.015]
         hover:shadow-[0_25px_70px_rgba(0,0,0,0.45)]
-        hover:border-white/20
-      ">
-
-        <div className="
+        hover:border-neutral-white/20
+      "
+      >
+        <div
+          className="
           pointer-events-none absolute inset-0 rounded-3xl
           opacity-0 group-hover:opacity-100
           transition duration-300
-          bg-gradient-to-b from-white/10 via-transparent to-transparent
-        " />
+          bg-gradient-to-b from-neutral-white/10 via-transparent to-transparent
+        "
+        />
 
-        <div className="
+        <div
+          className="
           pointer-events-none absolute inset-0 rounded-3xl
-          bg-gradient-to-b from-white/10 to-transparent
+          bg-gradient-to-b from-neutral-white/10 to-transparent
           opacity-30
-        " />
+        "
+        />
 
-        <div className="relative z-10 flex flex-col h-full">
+        <div className="relative z-10 flex flex-col h-full text-center">
 
-          <div className="
-            w-16 h-16 mx-auto flex items-center justify-center 
-            rounded-full
-            bg-brand-300/20
-            text-brand-300
-            mb-6
-            transition-all duration-300
-            group-hover:scale-105
-            group-hover:shadow-[0_0_40px_rgba(141,190,79,0.25)]
-          ">
-            {icon}
+          <div className="mb-6 flex justify-center">
+            <div
+              className="
+              w-14 h-14 sm:w-16 sm:h-16
+              flex items-center justify-center 
+              rounded-full
+              
+              bg-brand-300/20
+              text-brand-300
+              
+              transition-all duration-300
+              
+              group-hover:scale-105
+              group-hover:shadow-[0_0_40px_rgba(141,190,79,0.25)]
+            "
+            >
+              {icon}
+            </div>
           </div>
 
-          <h3 className="font-heading text-h3 mb-3">{title}</h3>
+          <h3 className="font-heading text-h4 sm:text-h3 mb-3">
+            {title}
+          </h3>
 
-          <p className="text-body text-white/70 leading-relaxed flex-grow">
+          <p
+            className="
+            text-body text-neutral-white/70 
+            leading-relaxed
+            
+            flex-grow   /* 🔥 INI KUNCI EQUAL HEIGHT */
+            
+            max-w-xs sm:max-w-sm mx-auto
+          "
+          >
             {desc}
           </p>
-
         </div>
       </div>
     </SpotlightCard>
@@ -84,7 +106,6 @@ export default function ValueSection() {
   return (
     <section className="relative bg-neutral-100 py-24 md:py-32 overflow-visible">
 
-      {/* STATIC BG */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(141,190,79,0.12),transparent_60%)]" />
 
       <div className="relative max-w-container mx-auto px-6 lg:px-12">
@@ -92,7 +113,6 @@ export default function ValueSection() {
         <RevealOnScroll>
           {(visible) => (
             <>
-              {/* HEADING */}
               <Motion show={visible}>
                 <div className="text-center mb-16 md:mb-20">
                   <h2 className="font-heading text-h2 tracking-tight text-neutral-black">
@@ -104,17 +124,20 @@ export default function ValueSection() {
                 </div>
               </Motion>
 
-              {/* CARDS */}
               <Motion show={visible} delay={0.2}>
                 <StaggerContainer isActive={visible}>
-                  <div className="
+                  <div
+                    className="
                     grid
                     grid-cols-1 
                     sm:grid-cols-2 
                     lg:grid-cols-3
                     gap-8 lg:gap-10
-                    auto-rows-fr
-                  ">
+                    
+                    auto-rows-fr   /* 🔥 GRID FIX */
+                    items-stretch
+                  "
+                  >
 
                     <StaggerItem className="h-full">
                       <Card
