@@ -6,8 +6,17 @@ import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import StaggerContainer from "@/components/animations/StaggerContainer";
 import StaggerItem from "@/components/animations/StaggerItem";
 import SpotlightCard from "@/components/ui/SpotlightCard";
+import Motion from "@/components/motion/Motion";
 
-function Card({ icon, title, desc }: any) {
+function Card({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
   return (
     <SpotlightCard className="h-full">
       <div className="
@@ -31,7 +40,6 @@ function Card({ icon, title, desc }: any) {
         hover:border-white/20
       ">
 
-        {/* PREMIUM LIGHTING */}
         <div className="
           pointer-events-none absolute inset-0 rounded-3xl
           opacity-0 group-hover:opacity-100
@@ -39,40 +47,29 @@ function Card({ icon, title, desc }: any) {
           bg-gradient-to-b from-white/10 via-transparent to-transparent
         " />
 
-        {/* SHEEN */}
         <div className="
           pointer-events-none absolute inset-0 rounded-3xl
           bg-gradient-to-b from-white/10 to-transparent
           opacity-30
         " />
 
-        {/* CONTENT */}
         <div className="relative z-10 flex flex-col h-full">
 
-          {/* ICON */}
           <div className="
             w-16 h-16 mx-auto flex items-center justify-center 
             rounded-full
-            
             bg-brand-300/20
             text-brand-300
-            
             mb-6
-            
             transition-all duration-300
-            
             group-hover:scale-105
             group-hover:shadow-[0_0_40px_rgba(141,190,79,0.25)]
           ">
             {icon}
           </div>
 
-          {/* TITLE */}
-          <h3 className="font-heading text-h3 mb-3">
-            {title}
-          </h3>
+          <h3 className="font-heading text-h3 mb-3">{title}</h3>
 
-          {/* DESCRIPTION */}
           <p className="text-body text-white/70 leading-relaxed flex-grow">
             {desc}
           </p>
@@ -87,70 +84,66 @@ export default function ValueSection() {
   return (
     <section className="relative bg-neutral-100 py-24 md:py-32 overflow-visible">
 
-      {/* background */}
+      {/* STATIC BG */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(141,190,79,0.12),transparent_60%)]" />
 
       <div className="relative max-w-container mx-auto px-6 lg:px-12">
 
-        {/* Heading */}
         <RevealOnScroll>
-          {() => (
-            <div className="text-center mb-16 md:mb-20">
-              <h2 className="font-heading text-h2 tracking-tight text-neutral-black">
-                Why Matcha Kun?
-              </h2>
-              <p className="mt-4 text-neutral-black/60 max-w-xl mx-auto">
-                Lebih dari sekadar minuman—ini adalah pengalaman rasa, energi, dan gaya hidup.
-              </p>
-            </div>
-          )}
-        </RevealOnScroll>
+          {(visible) => (
+            <>
+              {/* HEADING */}
+              <Motion show={visible}>
+                <div className="text-center mb-16 md:mb-20">
+                  <h2 className="font-heading text-h2 tracking-tight text-neutral-black">
+                    Why Matcha Kun?
+                  </h2>
+                  <p className="mt-4 text-neutral-black/60 max-w-xl mx-auto">
+                    Lebih dari sekadar minuman—ini adalah pengalaman rasa, energi, dan gaya hidup.
+                  </p>
+                </div>
+              </Motion>
 
-        {/* Cards */}
-        <RevealOnScroll>
-          {(isVisible) => (
-            <StaggerContainer isActive={isVisible}>
-              <div className="
-                grid
-                
-                grid-cols-1 
-                sm:grid-cols-2 
-                lg:grid-cols-3
-                
-                gap-8 lg:gap-10
-                
-                auto-rows-fr
-                items-stretch
-                
-                overflow-visible
-              ">
+              {/* CARDS */}
+              <Motion show={visible} delay={0.2}>
+                <StaggerContainer isActive={visible}>
+                  <div className="
+                    grid
+                    grid-cols-1 
+                    sm:grid-cols-2 
+                    lg:grid-cols-3
+                    gap-8 lg:gap-10
+                    auto-rows-fr
+                  ">
 
-                <StaggerItem className="h-full">
-                  <Card
-                    icon={<Leaf size={28} strokeWidth={2.2} />}
-                    title="Ceremonial Grade"
-                    desc="Matcha berkualitas tinggi dengan rasa umami halus, tanpa pahit, dan aroma autentik khas Jepang."
-                  />
-                </StaggerItem>
+                    <StaggerItem className="h-full">
+                      <Card
+                        icon={<Leaf size={28} strokeWidth={2.2} />}
+                        title="Ceremonial Grade"
+                        desc="Matcha berkualitas tinggi dengan rasa umami halus, tanpa pahit, dan aroma autentik khas Jepang."
+                      />
+                    </StaggerItem>
 
-                <StaggerItem className="h-full">
-                  <Card
-                    icon={<Sparkles size={28} strokeWidth={2.2} />}
-                    title="Matcha Fusion"
-                    desc="Kombinasi matcha dengan rasa modern seperti vanilla, chocolate, dan signature blend yang unik."
-                  />
-                </StaggerItem>
+                    <StaggerItem className="h-full">
+                      <Card
+                        icon={<Sparkles size={28} strokeWidth={2.2} />}
+                        title="Matcha Fusion"
+                        desc="Kombinasi matcha dengan rasa modern seperti vanilla, chocolate, dan signature blend yang unik."
+                      />
+                    </StaggerItem>
 
-                <StaggerItem className="h-full">
-                  <Card
-                    icon={<HeartPulse size={28} strokeWidth={2.2} />}
-                    title="Modern Lifestyle"
-                    desc="Mendukung fokus, energi stabil, dan gaya hidup aktif yang produktif setiap hari."
-                  />
-                </StaggerItem>
+                    <StaggerItem className="h-full">
+                      <Card
+                        icon={<HeartPulse size={28} strokeWidth={2.2} />}
+                        title="Modern Lifestyle"
+                        desc="Mendukung fokus, energi stabil, dan gaya hidup aktif yang produktif setiap hari."
+                      />
+                    </StaggerItem>
 
-              </div>
-            </StaggerContainer>
+                  </div>
+                </StaggerContainer>
+              </Motion>
+            </>
           )}
         </RevealOnScroll>
 
