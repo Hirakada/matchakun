@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import TypingAnimation from "@/components/ui/Typing";
+import MenuSelector from "@/components/ui/MenuSelector";
+import { LayoutGroup } from "framer-motion";
 
 import { MatchaItem } from "@/data/matchaMenu";
 import {
@@ -13,6 +15,8 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useSpring } from "framer-motion";
+
+import { Info, X } from "lucide-react";
 
 type Props = {
     active: MatchaItem;
@@ -120,23 +124,50 @@ export default function HeroSection({
     );
 
     const smoothY = useSpring(y, {
-    stiffness: 70,
-    damping: 22,
+        stiffness: 70,
+        damping: 22,
     });
 
     const finalScale = useTransform(baseScale, (s) =>
-    isHover ? s + 0.04 : s
+        isHover ? s + 0.04 : s
     );
 
     const smoothScale = useSpring(finalScale, {
-    stiffness: 70,
-    damping: 22,
+        stiffness: 70,
+        damping: 22,
     });
+
+    const [open, setOpen] = useState(false);
+
+    const toggle = () => {
+        setOpen((prev) => !prev);
+    };
+
+    {/* Slide */}
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const index = menu.findIndex((m) => m.id === active.id);
+        if (index !== -1) setCurrentIndex(index);
+    }, [active, menu]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % menu.length);
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, [menu.length]);
+
+    useEffect(() => {
+        if (!menu[currentIndex]) return;
+        setActive(menu[currentIndex]);
+    }, [currentIndex, menu, setActive]);
 
     return (
     <section
         id="hero"
-        className="relative h-screen flex items-center bg-brand-300 overflow-hidden"
+        className="relative h-[100dvh] flex bg-brand-300 overflow-hidden"
     >
         {/* BACKGROUND */}
         <motion.div
@@ -147,58 +178,83 @@ export default function HeroSection({
         <div className="absolute w-100 h-100 bg-lime-200/30 blur-[120px] rounded-full -bottom-25 -right-25" />
         </motion.div>
 
-        <div ref={ref} className="absolute inset-0 w-full overflow-visible pointer-events-none z-10">
-            <AnimatePresence mode="wait">
+        {/* IMAGE */}
+        <div
+            ref={ref}
+            className="absolute inset-0 w-full overflow-visible z-10 pointer-events-none"
+        >            
+            <AnimatePresence mode="wait" initial={false}>
                 <motion.div
-                key={active.id}
-                style={{ y: smoothY, scale: smoothScale }}
-                className="
+                    key={active.id}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -40, scale: 0.95 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="
                     absolute bottom-[-5%] left-1/2 -translate-x-1/2
                     w-[160%] max-w-300
                     pointer-events-auto
-                "
+                    "
                 >
-                <Image
-                    src={active.image}
-                    alt={active.name}
-                    width={608}
-                    height={1080}
-                    className="w-full h-auto object-contain"
-                    priority
-                />
+                <motion.div
+                    style={{ 
+                        y: smoothY, 
+                        scale: smoothScale
+                    }}
+                >
+                    <Image
+                        src={active.image}
+                        alt={active.name}
+                        width={608}
+                        height={1080}
+                        className="w-full h-auto object-contain"
+                        priority
+                    />
+                </motion.div>
                 </motion.div>
             </AnimatePresence>
         </div>
 
         {/* CONTENT GRID */}
+        <LayoutGroup id="menu-selector">
+
         <div className="max-w-300 mx-auto px-6 pt-20 flex flex-col lg:px-12 lg:grid lg:grid-cols-3 items-center w-full z-20">
 
             {/* LEFT */}
             <motion.div
                 style={{ y: yFrontFinal }}
-                className="flex flex-col text-center lg:text-left space-y-12"
+                className="flex flex-col text-center lg:text-left space-y-8 lg:space-y-16"
             >
                 <div>
-                <h1 className="font-heading text-display text-neutral-black tracking-tight">
-                    Matcha
-                </h1>
+                    <h1 className="font-heading text-display text-neutral-black tracking-tight">
+                        Matcha
+                    </h1>
 
-                <h3 className="flex gap-2 justify-center lg:justify-start font-heading text-h3 text-neutral-black">
-                    <span className="text-neutral-white">For</span>
-                    <TypingAnimation
-                    strings={[
-                        "Everyday Energy",
-                        "Lively Focus",
-                        "Modern Living",
-                    ]}
-                    loop
-                    />
-                </h3>
+                    <h2 className="flex justify-center lg:justify-start font-heading text-h2 lg:text-h3 text-neutral-black">
+                        <span className="text-neutral-white">For</span>
+                        <span className="ml-2">
+                            <TypingAnimation
+                                strings={[
+                                    "Everyday Energy",
+                                    "Lively Focus",
+                                    "Modern Living",
+                                ]}
+                                loop
+                            />
+                        </span>
+                    </h2>
                 </div>
 
                 <Button className="mx-auto lg:mx-0 w-fit font-semibold px-6 py-3 rounded-full bg-neutral-black text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
-                Find Us
+                    Find Us
                 </Button>
+
+                <MenuSelector
+                    menu={menu}
+                    currentIndex={currentIndex}
+                    setCurrentIndex={setCurrentIndex}
+                    className="flex lg:hidden justify-center mt-6 flex-wrap"
+                />
             </motion.div>
 
             {/* EMPTY CENTER */}
@@ -207,120 +263,115 @@ export default function HeroSection({
             {/* RIGHT */}
             <motion.div
                 style={{ y: yFrontFinal }}
-                className="max-w-xs w-full ml-auto"
-            >
+                className="flex flex-col items-end gap-2 max-w-xs w-full ml-auto absolute bottom-[6dvh] lg:relative"
+            >   
+                <button
+                    onClick={toggle}
+                    className="
+                        lg:hidden
+                        w-fit
+                        p-3 rounded-full 
+                        bg-neutral-black 
+                        backdrop-blur-md border 
+                        border-neutral-white/20
+                        shadow-[0_20px_60px_rgba(0,0,0,0.35)]
+                        text-neutral-white
+                        hover:scale-105 transition"
+                    >
+                    <span className="
+                        pointer-events-none absolute inset-0 rounded-full
+                        bg-gradient-to-b from-neutral-white/30 to-transparent
+                        opacity-40
+                    " />
+
+                    <span className="relative z-10">
+                        {open ? <X size={18} /> : <Info size={18} />}
+                    </span>
+                </button>
                 <motion.div
-                layout
-                transition={{
-                    layout: {
-                    type: "spring",
-                    stiffness: 120,
-                    damping: 20,
-                    },
-                }}
-                className="
-                    relative flex flex-col space-y-5
-                    p-5 rounded-2xl
-                    backdrop-blur-xl
-                    bg-neutral-black
-                    border border-neutral-white/20
-                    shadow-[0_20px_60px_rgba(0,0,0,0.35)]
-                    text-neutral-white
-                    overflow-hidden
-                "
-                >
-                <div className="
-                    pointer-events-none absolute inset-0 rounded-2xl
-                    bg-gradient-to-b from-neutral-white/30 to-transparent
-                    opacity-40
-                " />
-
-                <motion.div layout className="relative flex flex-wrap gap-2 w-full justify-start">
-                    {menu.map((item) => {
-                    const isActive = active.id === item.id;
-
-                    return (
-                        <button
-                        key={item.id}
-                        onClick={() => setActive(item)}
-                        className="hidden lg:block relative px-3 py-1.5 text-xs font-medium rounded-full border border-white/20 transition duration-200 hover:scale-95"
+                    style={{
+                        visibility: (!isMobile || open) ? "visible" : "hidden",
+                        pointerEvents: (!isMobile || open) ? "auto" : "none"
+                    }}
+                        className="
+                            relative flex flex-col space-y-5
+                            p-5 rounded-2xl
+                            backdrop-blur-xl
+                            bg-neutral-black
+                            border border-neutral-white/20
+                            shadow-[0_20px_60px_rgba(0,0,0,0.35)]
+                            text-neutral-white
+                            overflow-hidden
+                        "
                         >
-                        {isActive && (
-                            <motion.span
-                            layoutId="selector-pill"
-                            className="absolute inset-0 bg-white rounded-full shadow-md"
-                            transition={{
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 30,
-                            }}
-                            />
-                        )}
+                        <div className="
+                            pointer-events-none absolute inset-0 rounded-2xl
+                            bg-gradient-to-b from-neutral-white/30 to-transparent
+                            opacity-40
+                        " />
+                        <MenuSelector
+                            menu={menu}
+                            currentIndex={currentIndex}
+                            setCurrentIndex={setCurrentIndex}
+                            className="hidden lg:flex relative flex-wrap gap-2 w-full justify-start"
+                        />
 
-                        <span className={`relative z-10 ${isActive ? "text-black" : "text-white/80"}`}>
-                            {item.name}
-                        </span>
-                        </button>
-                    );
-                    })}
-                </motion.div>
+                        {/* DESCRIPTION */}
+                        <div className="relative">
+                            <AnimatePresence mode="popLayout">
+                            <motion.p
+                                key={active.id}
+                                layout
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.3 }}
+                                className="text-body-sm text-left leading-relaxed text-white/80"
+                            >
+                                {active.description}
+                            </motion.p>
+                            </AnimatePresence>
+                        </div>
 
-                {/* DESCRIPTION */}
-                <div className="relative">
-                    <AnimatePresence mode="popLayout">
-                    <motion.p
-                        key={active.id}
-                        layout
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-body-sm text-left leading-relaxed text-white/80"
-                    >
-                        {active.description}
-                    </motion.p>
-                    </AnimatePresence>
-                </div>
-
-                {/* INGREDIENTS */}
-                <div className="relative">
-                    <AnimatePresence mode="popLayout">
-                    <motion.div
-                        key={active.id}
-                        layout
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                        variants={{
-                        hidden: {},
-                        show: {
-                            transition: {
-                            staggerChildren: 0.08,
-                            },
-                        },
-                        }}
-                        className="flex flex-wrap gap-3 justify-start w-full"
-                    >
-                        {active.ingredients.map((ing) => (
-                        <motion.div
-                            key={ing}
-                            variants={{
-                            hidden: { opacity: 0, y: 10 },
-                            show: { opacity: 1, y: 0 },
-                            }}
-                            className="flex items-center gap-2 text-body-sm text-white/80"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
-                            <span>{ing}</span>
-                        </motion.div>
-                        ))}
+                        {/* INGREDIENTS */}
+                        <div className="relative">
+                            <AnimatePresence mode="popLayout">
+                            <motion.div
+                                key={active.id}
+                                layout
+                                initial="hidden"
+                                animate="show"
+                                exit="hidden"
+                                variants={{
+                                hidden: {},
+                                show: {
+                                    transition: {
+                                    staggerChildren: 0.08,
+                                    },
+                                },
+                                }}
+                                className="flex flex-wrap gap-3 justify-start w-full"
+                            >
+                                {active.ingredients.map((ing) => (
+                                <motion.div
+                                    key={ing}
+                                    variants={{
+                                    hidden: { opacity: 0, y: 10 },
+                                    show: { opacity: 1, y: 0 },
+                                    }}
+                                    className="flex items-center gap-2 text-body-sm text-white/80"
+                                >
+                                    <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
+                                    <span>{ing}</span>
+                                </motion.div>
+                                ))}
+                            </motion.div>
+                            </AnimatePresence>
+                        </div>
                     </motion.div>
-                    </AnimatePresence>
-                </div>
-
-                </motion.div>
             </motion.div>
         </div>
+        </LayoutGroup>
     </section>
     );
 }

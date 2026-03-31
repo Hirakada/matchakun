@@ -21,7 +21,7 @@
   --text-body: clamp(15px, 1.2vw, 17px);
   --text-body-sm: clamp(13px, 1vw, 14px);
 
-  --text-display: clamp(48px, 10cqw, 120px);
+  --text-display: clamp(90px, 10cqw, 120px);
 
   --text-h5: clamp(16px, 1.4vw, 18px);
   --text-h4: clamp(20px, 2vw, 24px);
