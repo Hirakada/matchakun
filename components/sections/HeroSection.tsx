@@ -6,7 +6,7 @@ import TypingAnimation from "@/components/ui/Typing";
 import MenuSelector from "@/components/ui/MenuSelector";
 import { LayoutGroup } from "framer-motion";
 
-import { MatchaItem } from "@/data/matchaMenu";
+import { MatchaBase } from "@/data/matchaMenu";
 import {
     motion,
     AnimatePresence,
@@ -19,9 +19,9 @@ import { useSpring } from "framer-motion";
 import { Info, X } from "lucide-react";
 
 type Props = {
-    active: MatchaItem;
-    setActive: (item: MatchaItem) => void;
-    menu: MatchaItem[];
+    active: MatchaBase;
+    setActive: (item: MatchaBase) => void;
+    menu: MatchaBase[];
 };
 
 export default function HeroSection({

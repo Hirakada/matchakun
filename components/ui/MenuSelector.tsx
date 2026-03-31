@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { MatchaItem } from "@/data/matchaMenu";
+import { MatchaBase } from "@/data/matchaMenu";
 
 type Props = {
-    menu: MatchaItem[];
+    menu: MatchaBase[];
     currentIndex: number;
     setCurrentIndex: (index: number) => void;
     className?: string;

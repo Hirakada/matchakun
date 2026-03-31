@@ -4,7 +4,7 @@ import React from "react";
 
 type ButtonProps = {
   children: React.ReactNode;
-  variant?: "default" | "cta" | "selector";
+  variant?: "default" | "cta" | "selector" | "quiz";
   href?: string;
   className?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -31,6 +31,22 @@ export default function Button({
 
     selector:
       "whitespace-nowrap !px-3 !py-2 !text-xs !rounded-full !shadow-none",
+    
+    quiz: `
+      w-full
+      min-h-[64px]
+      px-5 py-4
+      rounded-2xl
+
+      bg-neutral-white text-neutral-black
+      border border-neutral-200
+
+      shadow-[0_8px_20px_rgba(0,0,0,0.05)]
+
+      hover:border-brand-300
+      hover:bg-brand-300/5
+      hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)]
+    `,
   };
 
   const combined = `${base} ${variants[variant]} ${interaction} ${className}`;
