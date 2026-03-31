@@ -1,5 +1,5 @@
+const IMAGE_VERSION = "1";
 // BASE TYPE
-
 export type MatchaBase = {
   id: "usucha" | "latte" | "cold";
   name: string;
@@ -12,13 +12,14 @@ export type MatchaBase = {
 // BREWING MENU
 
 export const matchaMenu: MatchaBase[] = [
+
   {
     id: "usucha",
     name: "Usucha",
     description:
       "Matcha tradisional yang disajikan ringan dengan campuran matcha dan air, menghasilkan rasa yang halus, bersih, dan autentik.",
     ingredients: ["Matcha", "Air"],
-    image: "/images/usucha.png",
+    image: `/images/usucha.png?v=${IMAGE_VERSION}`,
     price: 0,
   },
   {
@@ -27,7 +28,7 @@ export const matchaMenu: MatchaBase[] = [
     description:
       "Perpaduan matcha, susu oat, dan air yang menciptakan rasa creamy, lembut, dan lebih ramah bagi penikmat matcha modern.",
     ingredients: ["Matcha", "Susu Oat", "Air"],
-    image: "/images/latte.png",
+    image: `/images/latte.png?v=${IMAGE_VERSION}`,
     price: 10000,
   },
   {
@@ -36,7 +37,7 @@ export const matchaMenu: MatchaBase[] = [
     description:
       "Matcha yang dikocok dengan susu oat dalam sajian dingin, memberikan sensasi segar dengan rasa yang tetap kuat dan creamy.",
     ingredients: ["Matcha", "Susu Oat"],
-    image: "/images/cold.png",
+    image: `/images/cold.png?v=${IMAGE_VERSION}`,
     price: 15000,
   },
 ];
