@@ -56,7 +56,7 @@ export default function CTASection() {
                           mx-auto 
                           mb-8 sm:mb-10
                         ">
-                          Follow us on Instagram for updates, promos, and matcha inspiration.
+                          Follow us on Instagram for updates, promos, and matcha inspiration. Hey
                         </p>
                       </Motion>
 
