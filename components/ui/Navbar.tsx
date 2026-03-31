@@ -95,7 +95,10 @@ export default function Navbar() {
             alt="Matcha Kun"
             width={240}
             height={48}
-            className="h-9 lg:h-12 w-auto"
+            className={`
+              h-9 lg:h-12 w-auto transition duration-300
+              ${scrolled || isQuiz ? "" : "invert brightness-0"}
+            `}
             priority
           />
         </Link>
