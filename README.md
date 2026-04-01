@@ -4,7 +4,7 @@
 
 Find the matcha that fits you — effortlessly.
 
-[### 🌐 Start Exploring](https://matchakun.vercel.app/)
+### [🌐 Start Exploring](https://matchakun.vercel.app/)
 
 ### 🌿 Why Matcha Kun
 
