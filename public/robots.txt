@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://matchakun.vercel.app/sitemap.xml
