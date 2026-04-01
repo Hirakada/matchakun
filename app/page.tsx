@@ -11,7 +11,7 @@ export default function Home() {
   const [active, setActive] = useState<MatchaBase>(matchaMenu[0]);
 
   return (
-    <main className="relative z-10 bg-transparent">
+    <main className="relative z-10 bg-transparent overflow-x-hidden">
       <HeroSection
         active={active}
         setActive={setActive}

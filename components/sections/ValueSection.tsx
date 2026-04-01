@@ -104,11 +104,50 @@ function Card({
 
 export default function ValueSection() {
   return (
-    <section className="relative bg-neutral-100 py-24 md:py-32 overflow-visible">
+    <section className="relative bg-neutral-100 py-24 md:py-32 overflow-hidden z-10">
+        <div
+        className="
+            pointer-events-none
+            absolute left-1/2 -translate-x-1/2
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(141,190,79,0.12),transparent_60%)]" />
+            top-[-40vh]
+            opacity-50
+            md:bottom-[-45vh]
+            lg:bottom-[-55vh]
 
-      <div className="relative max-w-container mx-auto px-6 lg:px-12">
+            z-[20]
+        "
+        >
+          <div
+              className="
+              w-[65vh] h-[65vh]
+              md:w-[80vh] md:h-[80vh]
+              lg:w-[95vh] lg:h-[95vh]
+
+              rounded-full
+
+bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.22),rgba(var(--color-brand-300-rgb),0.12)_40%,transparent_75%)]
+              "
+          />
+
+          <div
+              className="
+              absolute inset-0
+
+              w-[90vh] h-[90vh]
+              md:w-[105vh] md:h-[105vh]
+              lg:w-[120vh] lg:h-[120vh]
+
+              -translate-x-[10%] -translate-y-[10%]
+
+              rounded-full
+              opacity-70
+
+              bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.22),rgba(var(--color-brand-300-rgb),0.12)_40%,transparent_75%)]
+              "
+          />
+        </div>
+      <div className="relative max-w-container mx-auto px-6 lg:px-12 z-25">
 
         <RevealOnScroll>
           {(visible) => (

@@ -18,6 +18,21 @@ const baloo = Baloo_2({
 export const metadata = {
   title: "Matcha Kun",
   description: "Matcha for Modern Living",
+  icons: {
+    icon: [
+      { url: "/icons/logo/favicon-brand.ico" },
+
+      {
+        url: "/icons/logo/favicon-brand.ico",
+        media: "(prefers-color-scheme: light)",
+      },
+
+      {
+        url: "/icons/logo/favicon-light.ico",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

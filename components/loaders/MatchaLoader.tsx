@@ -20,12 +20,15 @@ export default function MatchaLoader({
 }) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
-  const [bubbles, setBubbles] = useState<BubbleConfig[]>([]);
+
+  // ✅ SSR-safe: start null (no mismatch)
+  const [bubbles, setBubbles] = useState<BubbleConfig[] | null>(null);
+
   const [show, setShow] = useState(true);
 
   const finalDone = done || isDone;
 
-  // ===== BUBBLES =====
+  // ===== GENERATE BUBBLES (CLIENT ONLY) =====
   useEffect(() => {
     const generated = Array.from({ length: 12 }).map((_, i) => ({
       size: 4 + Math.random() * 8,
@@ -34,6 +37,7 @@ export default function MatchaLoader({
       drift: Math.random() * 10 - 5,
       duration: 2 + Math.random(),
     }));
+
     setBubbles(generated);
   }, []);
 
@@ -103,25 +107,13 @@ export default function MatchaLoader({
             style={{ transformOrigin: "center center" }}
             animate={
               finalDone
-                ? {
-                    scale: 20,
-                    y: -200,
-                  }
-                : {
-                    y: [0, -10, -6, 0],
-                  }
+                ? { scale: 20, y: -200 }
+                : { y: [0, -10, -6, 0] }
             }
             transition={
               finalDone
-                ? {
-                    duration: 1.2,
-                    ease: [0.22, 1, 0.36, 1],
-                  }
-                : {
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }
+                ? { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+                : { duration: 3, repeat: Infinity, ease: "easeInOut" }
             }
           >
             {/* BOWL */}
@@ -139,16 +131,8 @@ export default function MatchaLoader({
                     className="absolute bottom-0 w-full h-full bg-[#7FBF2E] opacity-40"
                     animate={{
                       x: [8, -8, 8],
-                      borderTopLeftRadius: [
-                        "40% 70%",
-                        "60% 40%",
-                        "40% 70%",
-                      ],
-                      borderTopRightRadius: [
-                        "60% 40%",
-                        "40% 70%",
-                        "60% 40%",
-                      ],
+                      borderTopLeftRadius: ["40% 70%", "60% 40%", "40% 70%"],
+                      borderTopRightRadius: ["60% 40%", "40% 70%", "60% 40%"],
                     }}
                     transition={{
                       duration: 1.6,
@@ -162,16 +146,8 @@ export default function MatchaLoader({
                     className="absolute bottom-0 w-full h-full bg-brand-500 opacity-60 mix-blend-multiply"
                     animate={{
                       x: [-4, 4, -4],
-                      borderTopLeftRadius: [
-                        "55% 45%",
-                        "45% 65%",
-                        "55% 45%",
-                      ],
-                      borderTopRightRadius: [
-                        "45% 65%",
-                        "55% 45%",
-                        "45% 65%",
-                      ],
+                      borderTopLeftRadius: ["55% 45%", "45% 65%", "55% 45%"],
+                      borderTopRightRadius: ["45% 65%", "55% 45%", "45% 65%"],
                     }}
                     transition={{
                       duration: 1.4,
@@ -185,16 +161,8 @@ export default function MatchaLoader({
                     className="absolute bottom-0 w-full h-full bg-brand-300"
                     animate={{
                       x: [-8, 8, -8],
-                      borderTopLeftRadius: [
-                        "60% 40%",
-                        "40% 70%",
-                        "60% 40%",
-                      ],
-                      borderTopRightRadius: [
-                        "40% 70%",
-                        "60% 40%",
-                        "40% 70%",
-                      ],
+                      borderTopLeftRadius: ["60% 40%", "40% 70%", "60% 40%"],
+                      borderTopRightRadius: ["40% 70%", "60% 40%", "40% 70%"],
                     }}
                     transition={{
                       duration: 1.6,
@@ -205,7 +173,7 @@ export default function MatchaLoader({
 
                   {/* BUBBLES */}
                   <div className="absolute bottom-0 w-full h-full overflow-hidden">
-                    {bubbles.map((b, i) => (
+                    {bubbles?.map((b, i) => (
                       <motion.div
                         key={i}
                         className="absolute bottom-0 bg-white/30 rounded-full"

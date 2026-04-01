@@ -164,7 +164,7 @@ export default function HeroSection({
     return (
     <section
         id="hero"
-        className="relative h-[100dvh] flex overflow-hidden"
+        className="relative h-[100dvh] flex overflow-hidden z-0"
     >
         {/* BACKGROUND */}
         <motion.div
@@ -172,19 +172,21 @@ export default function HeroSection({
             className="absolute inset-0 -z-10"
         >
             <div className="absolute inset-0">
-            <img
-                src="/images/hero-bg.png"
-                alt=""
-                className="w-full h-full object-cover opacity-25 block"
-            />
+                <Image
+                    src="/images/hero-bg.png"
+                    alt=""
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="object-cover opacity-25"
+                />
             </div>
 
             <div className="absolute inset-0 bg-brand-300/70" />
 
-            <div className="absolute w-125 h-125 bg-white/20 blur-[120px] rounded-full -top-25 -left-[100px]" />
-            <div className="absolute w-100 h-100 bg-lime-200/30 blur-[120px] rounded-full -bottom-25 -right-25" />
+            <div className="absolute w-125 h-125 bg-neutral-white/20 blur-[120px] rounded-full -top-25 -left-[100px]" />
+            <div className="absolute w-100 h-100 bg-brand-300/30 blur-[120px] rounded-full -bottom-25 -right-25" />
         </motion.div>
-
         {/* IMAGE */}
         <div
             ref={ref}
@@ -227,6 +229,7 @@ export default function HeroSection({
             </AnimatePresence>
         </div>
 
+
         {/* CONTENT GRID */}
         <div className="max-w-300 mx-auto px-6 pt-20 flex flex-col lg:px-12 lg:grid lg:grid-cols-3 items-center w-full z-20">
 
@@ -255,7 +258,7 @@ export default function HeroSection({
                     </h2>
                 </div>
 
-                <Button className="mx-auto lg:mx-0 w-fit font-semibold px-6 py-3 rounded-full bg-neutral-black text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
+                <Button className="mx-auto lg:mx-0 w-fit font-semibold px-6 py-3 rounded-full bg-neutral-black text-neutral-white hover:scale-105 hover:shadow-lg transition-all duration-300">
                     Find Us
                 </Button>
 
@@ -340,7 +343,7 @@ export default function HeroSection({
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.3 }}
-                                className="text-body-sm text-justify leading-relaxed text-white/80"
+                                className="text-body-sm text-justify leading-relaxed text-neutral-white/80"
                             >
                                 {active.description}
                             </motion.p>
@@ -373,9 +376,9 @@ export default function HeroSection({
                                     hidden: { opacity: 0, y: 10 },
                                     show: { opacity: 1, y: 0 },
                                     }}
-                                    className="flex items-center gap-2 text-body-sm text-white/80"
+                                    className="flex items-center gap-2 text-body-sm text-neutral-white/80"
                                 >
-                                    <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-white/60" />
                                     <span>{ing}</span>
                                 </motion.div>
                                 ))}
@@ -384,6 +387,67 @@ export default function HeroSection({
                         </div>
                     </motion.div>
             </motion.div>
+        </div>
+        <div
+            className="
+                pointer-events-none
+                absolute bottom-0 left-0 w-full
+                z-10
+
+                h-[35vh] 
+                md:h-[45vh] 
+                lg:h-[50vh]
+
+                bg-gradient-to-b 
+                from-transparent 
+                via-neutral-100/20 
+                md:via-neutral-100/30 
+                lg:via-neutral-100/40 
+                to-neutral-100
+            "
+        />
+    
+        <div
+        className="
+            pointer-events-none
+            absolute left-1/2 -translate-x-1/2
+            
+            opacity-50
+            bottom-[-35vh]
+            md:bottom-[-45vh]
+            lg:bottom-[-55vh]
+
+            z-[20]
+        "
+        >
+        <div
+            className="
+            w-[65vh] h-[65vh]
+            md:w-[80vh] md:h-[80vh]
+            lg:w-[95vh] lg:h-[95vh]
+
+            rounded-full
+
+            bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.22),rgba(var(--color-brand-300-rgb),0.12)_40%,transparent_75%)]
+            "
+        />
+
+        <div
+            className="
+            absolute inset-0
+
+            w-[90vh] h-[90vh]
+            md:w-[105vh] md:h-[105vh]
+            lg:w-[120vh] lg:h-[120vh]
+
+            -translate-x-[10%] -translate-y-[10%]
+
+            rounded-full
+            opacity-70
+
+            bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.15),transparent_70%)]
+            "
+        />
         </div>
     </section>
     );
