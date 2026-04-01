@@ -20,7 +20,7 @@ export default function QuizPage() {
   const progress = ((stepIndex + 1) / steps.length) * 100;
 
   return (
-    <section className="flex items-center justify-center bg-cream-100 min-h-screen">
+    <section className="flex items-center justify-center bg-cream-100 relative h-[100dvh]">
       <div className="max-w-300 mx-auto px-4 lg:px-12 h-full flex flex-col justify-center">
 
         {/* CONTENT WRAPPER (PT DI SINI, BUKAN SECTION) */}
