@@ -21,6 +21,7 @@ export default function TypingAnimation({
 
   useEffect(() => {
     if (!el.current) return;
+    if (typed.current) return;
 
     typed.current = new Typed(el.current, {
       strings,
@@ -31,9 +32,9 @@ export default function TypingAnimation({
     });
 
     return () => {
-      typed.current?.destroy(); 
+      typed.current?.destroy();
     };
-  }, [strings, typeSpeed, backSpeed, loop]);
+  }, []);
 
-  return <span ref={el} />;
+  return <span ref={el} suppressHydrationWarning />;
 }

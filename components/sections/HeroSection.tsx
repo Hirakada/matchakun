@@ -161,6 +161,12 @@ export default function HeroSection({
         return () => clearInterval(interval);
     }, [currentIndex, menu, setActive]);
 
+    const TYPING_STRINGS = [
+        "Everyday Energy",
+        "Lively Focus",
+        "Modern Living",
+    ];
+
     return (
     <section
         id="hero"
@@ -246,14 +252,10 @@ export default function HeroSection({
                     <h2 className="flex justify-center lg:justify-start font-heading text-h2 lg:text-h3 text-neutral-black">
                         <span className="text-neutral-white">For</span>
                         <span className="ml-2">
-                            <TypingAnimation
-                                strings={[
-                                    "Everyday Energy",
-                                    "Lively Focus",
-                                    "Modern Living",
-                                ]}
-                                loop
-                            />
+                        <TypingAnimation
+                            strings={TYPING_STRINGS}
+                            loop
+                        />
                         </span>
                     </h2>
                 </div>
