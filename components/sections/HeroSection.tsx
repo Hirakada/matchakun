@@ -57,15 +57,15 @@ export default function HeroSection({
             width < 768 || (isTouch && height < 500);
 
             if (!isMobileDevice && !isTablet) {
-                setBaseOffset(800);
+                setBaseOffset(720);
                 setScaleRange(GLOBAL_SCALE_RANGE);
                 setIsMobile(false);
             } else if (isTablet) {
-                setBaseOffset(640);
+                setBaseOffset(400);
                 setScaleRange(GLOBAL_SCALE_RANGE);
                 setIsMobile(true);
             } else {
-                setBaseOffset(360);
+                setBaseOffset(200);
                 setScaleRange(GLOBAL_SCALE_RANGE);
                 setIsMobile(true);
             }
@@ -422,34 +422,34 @@ export default function HeroSection({
             z-[20]
         "
         >
-        <div
-            className="
-            w-[65vh] h-[65vh]
-            md:w-[80vh] md:h-[80vh]
-            lg:w-[95vh] lg:h-[95vh]
+            <div
+                className="
+                w-[65vh] h-[65vh]
+                md:w-[80vh] md:h-[80vh]
+                lg:w-[95vh] lg:h-[95vh]
 
-            rounded-full
+                rounded-full
 
-            bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.22),rgba(var(--color-brand-300-rgb),0.12)_40%,transparent_75%)]
-            "
-        />
+                bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.22),rgba(var(--color-brand-300-rgb),0.12)_40%,transparent_75%)]
+                "
+            />
 
-        <div
-            className="
-            absolute inset-0
+            <div
+                className="
+                absolute inset-0
 
-            w-[90vh] h-[90vh]
-            md:w-[105vh] md:h-[105vh]
-            lg:w-[120vh] lg:h-[120vh]
+                w-[90vh] h-[90vh]
+                md:w-[105vh] md:h-[105vh]
+                lg:w-[120vh] lg:h-[120vh]
 
-            -translate-x-[10%] -translate-y-[10%]
+                -translate-x-[10%] -translate-y-[10%]
 
-            rounded-full
-            opacity-70
+                rounded-full
+                opacity-70
 
-            bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.15),transparent_70%)]
-            "
-        />
+                bg-[radial-gradient(circle,rgba(var(--color-brand-300-rgb),0.15),transparent_70%)]
+                "
+            />
         </div>
     </section>
     );
