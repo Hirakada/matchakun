@@ -49,23 +49,30 @@ export default function HeroSection({
             const width = window.innerWidth;
             const height = window.innerHeight;
 
+            const OFFSET_RATIO = {
+                desktop: 1,
+                tablet: 0.7,
+                mobile: 0.3,
+            };
+
             const isTouch = window.matchMedia("(pointer: coarse)").matches;
             const isTablet =
             width >= 768 && width <= 1024 && isTouch && height > 500;
-
+            
             const isMobileDevice =
             width < 768 || (isTouch && height < 500);
 
+
             if (!isMobileDevice && !isTablet) {
-                setBaseOffset(720);
+                setBaseOffset(height * OFFSET_RATIO.desktop);
                 setScaleRange(GLOBAL_SCALE_RANGE);
                 setIsMobile(false);
             } else if (isTablet) {
-                setBaseOffset(400);
+                setBaseOffset(height * OFFSET_RATIO.tablet);
                 setScaleRange(GLOBAL_SCALE_RANGE);
                 setIsMobile(true);
             } else {
-                setBaseOffset(200);
+                setBaseOffset(height * OFFSET_RATIO.mobile);
                 setScaleRange(GLOBAL_SCALE_RANGE);
                 setIsMobile(true);
             }
@@ -95,16 +102,15 @@ export default function HeroSection({
 
     const yBg = useTransform(scrollYProgress, [0, 1], [15, -15]);
 
-    const y = useTransform(
-        [yParallax],
-        (v) => {
-            const value = (v as number[])[0];
+        const PARALLAX_INTENSITY = isMobile ? 0.35 : 1;
 
-            return isMobile
-            ? baseOffset + value * 0.2
-            : value + baseOffset;
-        }
-    );
+        const y = useTransform(
+            [yParallax],
+            (v) => {
+                const value = (v as number[])[0];
+                return baseOffset + value * PARALLAX_INTENSITY;
+            }
+        );
 
     const baseScale = useTransform(
         [scrollYProgress],
@@ -112,11 +118,11 @@ export default function HeroSection({
             const p = (v as number[])[0];
 
             if (isMobile) {
-            return (
-                scaleRange[0] +
-                (scaleRange[1] - scaleRange[0]) * p * 0.5 +
-                0.25
-            );
+                return (
+                    scaleRange[0] +
+                    (scaleRange[1] - scaleRange[0]) * p +
+                    0.1
+                );
             }
 
             return scaleRange[0] + (scaleRange[1] - scaleRange[0]) * p;
