@@ -1,15 +1,19 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = "https://matchakun.vercel.app";
+
   return [
     {
-      url: "https://matchakun.vercel.app",
+      url: baseUrl,
       lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: "https://matchakun.vercel.app/quiz",
+      url: `${baseUrl}/quiz`,
       lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 0.8,
     },
   ];
