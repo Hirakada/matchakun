@@ -17,6 +17,23 @@ export default function Home() {
         setActive={setActive}
         menu={matchaMenu}
       />
+      {/* SEO SHADOW CONTENT */}
+      <section className="sr-only">
+        <h2>Menu Matcha Matcha Kun</h2>
+
+        {matchaMenu.map((item) => (
+          <div key={item.id}>
+            <h3>{item.name}</h3>
+            <p>{item.description}</p>
+
+            <ul>
+              {item.ingredients.map((ing) => (
+                <li key={ing}>{ing}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
       <ValueSection />
       <CTASection />
     </main>
