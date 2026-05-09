@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Button from "@/components/ui/Button";
-import TypingAnimation from "@/components/ui/Typing";
 import MenuSelector from "@/components/ui/MenuSelector";
 import { LayoutGroup } from "framer-motion";
+import FindUsPopup from "@/components/findUsPop"
 
 import { MatchaBase } from "@/data/matchaMenu";
 import {
@@ -250,25 +250,24 @@ export default function HeroSection({
                 style={{ y: yFrontFinal }}
                 className="flex flex-col text-center lg:text-left space-y-8 lg:space-y-16"
             >
+                <div className="inline-flex w-fit items-center rounded-full border border-primary-200 bg-primary-50 px-4 py-1.5">
+                    <span className="whitespace-nowrap text-xs font-medium tracking-[0.2em] uppercase text-primary-700">
+                        Ceremonial Grade
+                    </span>
+                </div>
                 <div>
                     <h1 className="font-heading text-display text-neutral-black tracking-tight">
                         Matcha
                     </h1>
 
                     <h2 className="flex justify-center lg:justify-start font-heading text-h2 lg:text-h3 text-neutral-black">
-                        <span className="text-neutral-white">For</span>
-                        <span className="ml-2">
-                        <TypingAnimation
-                            strings={TYPING_STRINGS}
-                            loop
-                        />
-                        </span>
+                        <span className="text-neutral-white">Crafted for Modern Life</span>
                     </h2>
                 </div>
 
-                <Button className="mx-auto lg:mx-0 w-fit font-semibold px-6 py-3 rounded-full bg-neutral-black text-neutral-white hover:scale-105 hover:shadow-lg transition-all duration-300">
-                    Find Us
-                </Button>
+                <FindUsPopup
+                    className="mx-auto lg:mx-0 w-fit font-semibold px-6 py-3 rounded-full bg-neutral-black text-neutral-white hover:scale-105 hover:shadow-lg transition-all duration-300"
+                />
 
                 <LayoutGroup id="menu-selector-mobile">
                     <MenuSelector

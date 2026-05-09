@@ -1,7 +1,7 @@
 const IMAGE_VERSION = "1";
 // BASE TYPE
 export type MatchaBase = {
-  id: "usucha" | "latte" | "cold";
+  id: "usucha" | "latte" | "coldwhisk";
   name: string;
   description: string;
   ingredients: string[];
@@ -32,12 +32,12 @@ export const matchaMenu: MatchaBase[] = [
     price: 10000,
   },
   {
-    id: "cold",
+    id: "coldwhisk",
     name: "Cold Whisk",
     description:
       "Matcha yang dikocok dengan susu oat dalam sajian dingin, memberikan sensasi segar dengan rasa yang tetap kuat dan creamy.",
     ingredients: ["Matcha", "Susu Oat"],
-    image: `/images/cold.png?v=${IMAGE_VERSION}`,
+    image: `/images/coldwhisk.png?v=${IMAGE_VERSION}`,
     price: 15000,
   },
 ];
@@ -45,7 +45,7 @@ export const matchaMenu: MatchaBase[] = [
 // POWDER TYPE
 
 export type MatchaPowder = {
-  id: "kaze" | "nami" | "ajisai";
+  id: "kaze" | "nami" | "roku";
   name: string;
   description: string;
   notes: string[];
@@ -70,8 +70,8 @@ export const matchaPowders: MatchaPowder[] = [
     price: 20000,
   },
   {
-    id: "ajisai",
-    name: "Ajisai",
+    id: "roku",
+    name: "Roku",
     description: "Balanced, creamy, dan umami — paling premium.",
     notes: ["Nutty", "Umami", "Creamy", "Balanced"],
     price: 28000,
@@ -87,9 +87,9 @@ export type MatchaProductId =
   | "nami_usucha"
   | "nami_latte"
   | "nami_cold"
-  | "ajisai_usucha"
-  | "ajisai_latte"
-  | "ajisai_cold";
+  | "roku_usucha"
+  | "roku_latte"
+  | "roku_cold";
 
 // FINAL PRODUCT TYPE
 

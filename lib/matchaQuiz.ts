@@ -35,7 +35,7 @@ export function getPrevStep(current: Step): Step {
 export function getRecommendationId(
   answers: QuizAnswers
 ): MatchaProductId {
-  let base: "usucha" | "latte" | "cold";
+  let base: "usucha" | "latte" | "coldwhisk";
 
   if (answers.dietary === "no_oat") {
     base = "usucha";
@@ -44,27 +44,27 @@ export function getRecommendationId(
   } else if (answers.texture === "creamy_smooth") {
     base = "latte";
   } else if (answers.texture === "creamy_fresh") {
-    base = "cold";
+    base = "coldwhisk";
   } else if (answers.experience === "beginner") {
     base = "latte";
   } else {
     base = "usucha";
   }
 
-  let powder: "kaze" | "nami" | "ajisai";
+  let powder: "kaze" | "nami" | "roku";
 
   if (answers.flavor === "nutty_creamy") {
     powder = "kaze";
   } else if (answers.flavor === "umami_bold") {
     powder = "nami";
   } else if (answers.flavor === "balanced") {
-    powder = "ajisai";
+    powder = "roku";
   } else if (answers.experience === "beginner") {
     powder = "kaze";
   } else if (answers.experience === "enthusiast") {
     powder = "nami";
   } else {
-    powder = "ajisai";
+    powder = "roku";
   }
 
   return `${powder}_${base}` as MatchaProductId;

@@ -2,8 +2,11 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import ClientWrapper from "@/components/providers/ClientWrapper";
 
-import { Inter, Baloo_2 } from "next/font/google";
+import { Inter, Baloo_2, Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body
         className={`${inter.variable} ${baloo.variable} bg-neutral-white text-neutral-black antialiased`}
       >
