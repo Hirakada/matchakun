@@ -34,7 +34,7 @@ export default function FindUsPopup({
         {
             title: "GrabFood",
             description: "Order via GrabFood",
-            href: "https://food.grab.com/id/id/restaurant/matcha-kun-tirtomoyo-delivery/6-C75ACYWHFEAJVJ",
+            href: "https://r.grab.com/o/rqIzyYRj",
             icon: Bike,
         },
         {
