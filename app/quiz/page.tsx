@@ -24,7 +24,7 @@ export default function QuizPage() {
       <div className="max-w-300 mx-auto px-4 lg:px-12 h-full flex flex-col justify-center">
 
         {/* CONTENT WRAPPER (PT DI SINI, BUKAN SECTION) */}
-        <div className="w-full max-w-xl mx-auto text-center pt-20 lg:pt-24">
+        <div className="w-full max-w-xl mx-auto text-center">
 
           {/* PROGRESS */}
           <div className="absolute top-0 left-0 right-0 flex flex-col mb-6">
@@ -52,7 +52,6 @@ export default function QuizPage() {
               className="space-y-6"
             >
 
-              {/* EXPERIENCE */}
               {step === "experience" && (
                 <>
                   <h1 className="text-h3 font-heading text-neutral-black">
@@ -75,7 +74,6 @@ export default function QuizPage() {
                 </>
               )}
 
-              {/* DIETARY */}
               {step === "dietary" && (
                 <>
                   <h1 className="text-h3 font-heading text-neutral-black">
@@ -94,7 +92,6 @@ export default function QuizPage() {
                 </>
               )}
 
-              {/* TEXTURE */}
               {step === "texture" && (
                 <>
                   <h1 className="text-h3 font-heading text-neutral-black">
@@ -117,7 +114,6 @@ export default function QuizPage() {
                 </>
               )}
 
-              {/* FLAVOR */}
               {step === "flavor" && (
                 <>
                   <h1 className="text-h3 font-heading text-neutral-black">
@@ -140,7 +136,6 @@ export default function QuizPage() {
                 </>
               )}
 
-              {/* RESULT */}
               {step === "result" && product && (
                 <div className="space-y-6">
                   <h1 className="text-h3 font-heading text-neutral-black">

@@ -17,19 +17,25 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
-type FindUsPopupProps = {
+type OrderPopupProps = {
     className?: string
 }
 
-export default function FindUsPopup({
+export default function OrderPopup({
     className = "",
-}: FindUsPopupProps) {
+}: OrderPopupProps) {
     const items = [
         {
             title: "Store Location",
             description: "Visit our offline store",
             href: "https://maps.app.goo.gl/hNffjyRno3LTnFuKA",
             icon: MapPin,
+        },
+        {
+            title: "Order Here",
+            description: "Order via Whatsapp",
+            href: "/order",
+            icon: ShoppingBag,
         },
         {
             title: "GrabFood",
@@ -55,7 +61,7 @@ export default function FindUsPopup({
                         "mx-auto lg:mx-0 w-fit rounded-full bg-neutral-black px-5 py-2.5 text-button font-semibold text-neutral-white transition-all duration-300 hover:scale-105 hover:shadow-lg sm:px-6 sm:py-3"
                     }
                 >
-                    Find Us
+                    Order Now
                 </Button>
             </DialogTrigger>
 

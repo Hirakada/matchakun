@@ -17,7 +17,6 @@ export default function Home() {
         setActive={setActive}
         menu={matchaMenu}
       />
-      {/* SEO SHADOW CONTENT */}
       <section className="sr-only">
         <h2>Menu Matcha Matcha Kun</h2>
 

@@ -10,7 +10,6 @@ export type MatchaBase = {
 };
 
 // BREWING MENU
-
 export const matchaMenu: MatchaBase[] = [
 
   {
@@ -43,7 +42,6 @@ export const matchaMenu: MatchaBase[] = [
 ];
 
 // POWDER TYPE
-
 export type MatchaPowder = {
   id: "kaze" | "nami" | "roku";
   name: string;
@@ -53,7 +51,6 @@ export type MatchaPowder = {
 };
 
 // POWDER DATA
-
 export const matchaPowders: MatchaPowder[] = [
   {
     id: "kaze",
@@ -79,7 +76,6 @@ export const matchaPowders: MatchaPowder[] = [
 ];
 
 // PRODUCT ID
-
 export type MatchaProductId =
   | "kaze_usucha"
   | "kaze_latte"
@@ -92,7 +88,6 @@ export type MatchaProductId =
   | "roku_cold";
 
 // FINAL PRODUCT TYPE
-
 export type MatchaProduct = {
   id: MatchaProductId;
   name: string;
@@ -102,7 +97,6 @@ export type MatchaProduct = {
 };
 
 // GENERATOR
-
 export function generateMatchaProducts(): MatchaProduct[] {
   return matchaPowders.flatMap((powder) =>
     matchaMenu.map((base) => ({
@@ -116,11 +110,9 @@ export function generateMatchaProducts(): MatchaProduct[] {
 }
 
 // CACHE (IMMUTABLE)
-
 const productsCache = Object.freeze(generateMatchaProducts());
 
 // HELPERS
-
 export function getMatchaProductById(id: MatchaProductId) {
   return productsCache.find((p) => p.id === id);
 }
@@ -139,10 +131,7 @@ export function getMatchaLabel(id: MatchaProductId) {
   return product?.name ?? "";
 }
 
-// ==============================
 // FORMAT PRICE (IDR)
-// ==============================
-
 export function formatRupiah(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",

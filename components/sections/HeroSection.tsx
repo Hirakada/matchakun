@@ -4,7 +4,7 @@ import Image from "next/image";
 import Button from "@/components/ui/Button";
 import MenuSelector from "@/components/ui/MenuSelector";
 import { LayoutGroup } from "framer-motion";
-import FindUsPopup from "@/components/findUsPop"
+import OrderPopup from "@/components/orderPopUp"
 
 import { MatchaBase } from "@/data/matchaMenu";
 import {
@@ -265,7 +265,7 @@ export default function HeroSection({
                     </h2>
                 </div>
 
-                <FindUsPopup
+                <OrderPopup
                     className="mx-auto lg:mx-0 w-fit font-semibold px-6 py-3 rounded-full bg-neutral-black text-neutral-white hover:scale-105 hover:shadow-lg transition-all duration-300"
                 />
 

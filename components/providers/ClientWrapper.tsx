@@ -13,7 +13,6 @@ export default function ClientWrapper({
   const [isLoaderFinished, setIsLoaderFinished] = useState(false);
   const [shouldShowLoader, setShouldShowLoader] = useState(true);
 
-  // ===== CHECK CACHE =====
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("matcha-loader-seen");
 
@@ -25,7 +24,6 @@ export default function ClientWrapper({
     }
   }, []);
 
-  // ===== PAGE LOAD =====
   useEffect(() => {
     const handleLoad = () => setIsPageLoaded(true);
 
@@ -37,7 +35,6 @@ export default function ClientWrapper({
     }
   }, []);
 
-  // ===== MIN TIME =====
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsMinTimePassed(true);
@@ -57,7 +54,6 @@ export default function ClientWrapper({
         />
       )}
 
-      {/* CONTENT langsung tampil */}
       <div className="relative z-10">{children}</div>
     </>
   );

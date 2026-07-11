@@ -9,19 +9,25 @@ import LinkText from "./LinkText";
 
 export default function Navbar() {
   const pathname = usePathname() || "";
-  const isHome = pathname === "/";
-  const isQuiz = pathname.startsWith("/quiz");
 
-  const [scrolled, setScrolled] = useState(!isHome);
+  const isHome = pathname === "/";
+  const isSpecialPage =
+    pathname.startsWith("/quiz") ||
+    pathname.startsWith("/order");
+
+  const [scrolled, setScrolled] = useState(false);
   const [animating, setAnimating] = useState<"down" | "up" | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    if (isSpecialPage) {
+      setScrolled(false);
+      return;
+    }
+
     let ticking = false;
 
     const calculate = () => {
-      if (isQuiz) return false;
-
       const hero = document.getElementById("hero");
       if (!hero) return true;
 
@@ -61,22 +67,20 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, [scrolled, isQuiz]);
+  }, [scrolled, isSpecialPage]);
+
+  const navClass = isSpecialPage
+    ? "fixed top-0 bg-transparent"
+    : scrolled
+    ? "fixed top-0 bg-neutral-white/70 backdrop-blur-md shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+    : "absolute top-0 bg-transparent";
 
   return (
     <nav
       className={`
         w-full z-50
         transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
-
-        ${
-          isQuiz
-            ? "fixed top-0 bg-transparent"
-            : scrolled
-            ? "fixed top-0 bg-neutral-white/70 backdrop-blur-md shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
-            : "absolute top-0 bg-transparent"
-        }
-
+        ${navClass}
         ${
           animating === "down"
             ? "animate-navbar-down"
@@ -88,23 +92,21 @@ export default function Navbar() {
     >
       <div className="max-w-300 mx-auto px-4 lg:px-12 py-4 flex items-center justify-between">
 
-        {/* LOGO */}
         <Link href="/" className="flex items-center">
           <Image
             src="/images/wordmark.svg"
             alt="Matcha Kun"
             width={240}
             height={48}
+            priority
             className={`
               h-9 lg:h-12 w-auto transition duration-300
-              ${scrolled || isQuiz ? "" : "invert brightness-0"}
+              ${scrolled || isSpecialPage ? "" : "invert brightness-0"}
             `}
-            priority
           />
         </Link>
 
-        {/* QUIZ MODE (MINIMAL NAV) */}
-        {isQuiz ? (
+        {isSpecialPage ? (
           <LinkText
             href="/"
             className="text-neutral-black hover:text-brand-500 transition-colors duration-300"
@@ -113,7 +115,6 @@ export default function Navbar() {
           </LinkText>
         ) : (
           <>
-            {/* DESKTOP */}
             <div className="hidden lg:flex items-center gap-6 text-body-sm font-heading">
 
               <LinkText
@@ -137,9 +138,9 @@ export default function Navbar() {
               >
                 Contact Us
               </Button>
+
             </div>
 
-            {/* MOBILE (ONLY NON-QUIZ) */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="lg:hidden ml-2 relative z-50"
@@ -159,8 +160,7 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* MOBILE MENU (ONLY NON-QUIZ) */}
-      {!isQuiz && (
+      {!isSpecialPage && (
         <div
           className={`
             lg:hidden absolute top-full right-4 mt-2 w-64 origin-top-right
@@ -173,7 +173,7 @@ export default function Navbar() {
           `}
         >
           <div className="rounded-2xl p-5 flex flex-col items-center gap-5 bg-neutral-white shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-            
+
             <Link
               href="/quiz"
               onClick={() => setIsOpen(false)}

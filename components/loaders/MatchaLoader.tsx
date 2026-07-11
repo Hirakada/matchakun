@@ -21,7 +21,6 @@ export default function MatchaLoader({
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
 
-  // ✅ SSR-safe: start null (no mismatch)
   const [bubbles, setBubbles] = useState<BubbleConfig[] | null>(null);
 
   const [show, setShow] = useState(true);
