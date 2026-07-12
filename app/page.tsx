@@ -6,6 +6,7 @@ import { matchaMenu, MatchaBase } from "@/data/matchaMenu";
 import HeroSection from "@/components/home/HeroSection";
 import ValueSection from "@/components/home/ValueSection";
 import CTASection from "@/components/home/CTASection";
+import EventSection from "@/components/home/EventSection";
 
 export default function Home() {
   const [active, setActive] = useState<MatchaBase>(matchaMenu[0]);

@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const { message } = await req.json();
 
-    const phone = process.env.WHATSAPP_NUMBER;
+    const phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
     if (!phone) {
       return NextResponse.json(
