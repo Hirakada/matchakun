@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { matchaMenu, MatchaBase } from "@/data/matchaMenu";
 
-import HeroSection from "@/components/sections/HeroSection";
-import ValueSection from "@/components/sections/ValueSection";
-import CTASection from "@/components/sections/CTASection";
+import HeroSection from "@/components/home/HeroSection";
+import ValueSection from "@/components/home/ValueSection";
+import CTASection from "@/components/home/CTASection";
 
 export default function Home() {
   const [active, setActive] = useState<MatchaBase>(matchaMenu[0]);
