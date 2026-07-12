@@ -1,295 +1,398 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
-
-import Button from "@/components/ui/Button";
 
 import {
-  matchaPowders,
-  matchaMenu,
   getMatchaProduct,
   formatRupiah,
   MatchaBase,
   MatchaPowder,
 } from "@/data/matchaMenu";
 
-type CartItem = {
-  powder: MatchaPowder["id"];
-  base: MatchaBase["id"];
-  qty: number;
-};
+import PowderSelector from "@/components/order/PowderSelection";
+import BrewSelector from "@/components/order/BrewSelection";
+import ProductSummary from "@/components/order/ProductSummary";
+import OrderSummary from "@/components/order/OrderSummary";
+import MobileStepper from "@/components/order/MobileStepper";
+
+import {
+  CartItem,
+  MobileStep,
+} from "@/components/order/types";
 
 export default function OrderPage() {
-  const [selectedPowder, setSelectedPowder] = useState<MatchaPowder["id"]>("kaze");
-  const [selectedBase, setSelectedBase] = useState<MatchaBase["id"]>("latte");
+
+  // ==========================
+  // MOBILE STEP
+  // ==========================
+
+  const [mobileStep, setMobileStep] =
+    useState<MobileStep>("menu");
+
+  const mobileSteps: MobileStep[] = [
+    "menu",
+    "checkout",
+  ];
+
+  const nextStep = () => {
+    if (mobileStep === "menu") {
+      setMobileStep("checkout");
+    }
+  };
+
+  const prevStep = () => {
+    if (mobileStep === "checkout") {
+      setMobileStep("menu");
+    }
+  };
+
+  // ==========================
+  // PRODUCT
+  // ==========================
+
+  const [selectedPowder, setSelectedPowder] =
+    useState<MatchaPowder["id"]>("kaze");
+
+  const [selectedBase, setSelectedBase] =
+    useState<MatchaBase["id"]>("latte");
+
   const [qty, setQty] = useState(1);
-  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const currentProduct = useMemo(() => {
+
+    return getMatchaProduct(
+      selectedPowder,
+      selectedBase
+    )!;
+
+  }, [selectedPowder, selectedBase]);
+
+  // ==========================
+  // CUSTOMER
+  // ==========================
+
   const [name, setName] = useState("");
+
   const [notes, setNotes] = useState("");
 
-  const currentProduct = useMemo(
-    () => getMatchaProduct(selectedPowder, selectedBase)!,
-    [selectedPowder, selectedBase]
-  );
+  // ==========================
+  // CART
+  // ==========================
 
-  const total = useMemo(
-    () =>
-      cart.reduce((sum, item) => {
-        const product = getMatchaProduct(item.powder, item.base)!;
-        return sum + product.price * item.qty;
-      }, 0),
-    [cart]
-  );
+  const [cart, setCart] = useState<CartItem[]>([]);
 
-  function addToCart() {
+  const addToCart = () => {
+
     setCart((prev) => {
-      const existing = prev.find(
-        (item) => item.powder === selectedPowder && item.base === selectedBase
+
+      const existing = prev.findIndex(
+        (item) =>
+          item.powder === selectedPowder &&
+          item.base === selectedBase
       );
 
-      if (existing) {
-        return prev.map((item) =>
-          item.powder === selectedPowder && item.base === selectedBase
-            ? { ...item, qty: item.qty + qty }
-            : item
-        );
+      if (existing >= 0) {
+
+        const copy = [...prev];
+
+        copy[existing].qty += qty;
+
+        return copy;
       }
 
       return [
         ...prev,
-        { powder: selectedPowder, base: selectedBase, qty },
+        {
+          powder: selectedPowder,
+          base: selectedBase,
+          qty,
+        },
       ];
     });
 
     setQty(1);
-  }
+  };
 
-  function updateQty(index: number, value: number) {
+  const increaseQty = (index: number) => {
+
+    setCart((prev) => {
+
+      const copy = [...prev];
+
+      copy[index].qty++;
+
+      return copy;
+
+    });
+
+  };
+
+  const decreaseQty = (index: number) => {
+
+    setCart((prev) => {
+
+      const copy = [...prev];
+
+      if (copy[index].qty > 1) {
+
+        copy[index].qty--;
+
+      }
+
+      return copy;
+
+    });
+
+  };
+
+  const removeItem = (index: number) => {
+
     setCart((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, qty: Math.max(1, value) } : item
-      )
+      prev.filter((_, i) => i !== index)
     );
-  }
 
-  function removeItem(index: number) {
-    setCart((prev) => prev.filter((_, i) => i !== index));
-  }
+  };
 
-  function sendWhatsapp() {
-    if (!cart.length) {
-      alert("Cart is empty.");
-      return;
-    }
+  // ==========================
+  // TOTAL
+  // ==========================
+
+  const total = useMemo(() => {
+
+    return cart.reduce((sum, item) => {
+
+      const product = getMatchaProduct(
+        item.powder,
+        item.base
+      )!;
+
+      return sum + product.price * item.qty;
+
+    }, 0);
+
+  }, [cart]);
+
+  // ==========================
+  // WHATSAPP
+  // ==========================
+
+  const checkout = () => {
 
     if (!name.trim()) {
+
       alert("Please enter your name.");
+
       return;
+
     }
 
-const items = cart
-  .map((item) => {
-    const product = getMatchaProduct(item.powder, item.base)!;
+    if (!cart.length) {
 
-    return `${item.qty} × ${product.name}
+      alert("Your cart is empty.");
+
+      return;
+
+    }
+
+    const items = cart
+      .map((item) => {
+
+        const product = getMatchaProduct(
+          item.powder,
+          item.base
+        )!;
+
+        return `${item.qty} × ${product.name}
 ${formatRupiah(product.price * item.qty)}`;
-  })
-  .join("\n\n");
 
-    const message = [
-        `Customer : ${name}`,
-        "------------------------------",
-        items,
-        "------------------------------",
-        `Total    : ${formatRupiah(total)}`,
-        `Notes    : ${notes || "-"}`,
-    ].join("\n");
+      })
+      .join("\n\n");
+
+    const message =
+`MATCHA KUN ORDER
+
+Customer : ${name}
+
+------------------------------
+
+${items}
+
+------------------------------
+
+Total : ${formatRupiah(total)}
+
+Notes : ${notes || "-"}`;
 
     window.open(
-      `https://wa.me/6282141914171?text=${encodeURIComponent(message)}`,
+
+      `https://wa.me/6282141914171?text=${encodeURIComponent(
+        message
+      )}`,
+
       "_blank"
+
     );
-  }
+
+  };
 
   return (
-    <main className="bg-cream-100 min-h-[100dvh] lg:h-[100dvh] overflow-hidden">
-      <div className="max-w-7xl mx-auto h-auto lg:h-full px-4 lg:px-8 pt-20 pb-6 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
-        <section className="flex flex-col gap-5 overflow-visible lg:overflow-y-auto min-h-0 pr-1">
-          <div className="bg-neutral-white rounded-3xl border border-neutral-200 p-6">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-h4 font-heading">Choose Powder</h2>
-              <span className="text-body-sm text-neutral-300">Step 1</span>
-            </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              {matchaPowders.map((powder) => {
-                const active = selectedPowder === powder.id;
+    <main className="bg-linear-to-br from-cream-100 to-neutral-100 min-h-screen lg:min-h-dvh">
 
-                return (
-                  <button
-                    key={powder.id}
-                    onClick={() => setSelectedPowder(powder.id)}
-                    className={`rounded-2xl border p-5 transition-all duration-300 text-left ${
-                      active
-                        ? "bg-brand-500 border-brand-500 text-neutral-white shadow-lg scale-[1.02]"
-                        : "bg-neutral-white border-neutral-200 hover:border-brand-300"
-                    }`}
-                  >
-                    <h3 className="font-heading text-h5">{powder.name}</h3>
-                    <p className={`mt-2 text-body-sm ${active ? "text-neutral-white/80" : "text-neutral-300"}`}>
-                      {powder.description}
-                    </p>
-                    <div className="mt-5 font-semibold">{formatRupiah(powder.price)}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+      <MobileStepper
+        current={mobileStep}
+        onBack={prevStep}
+        onNext={nextStep}
+      />
 
-          <div className="bg-neutral-white rounded-3xl border border-neutral-200 p-6">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-h4 font-heading">Choose Brewing</h2>
-              <span className="text-body-sm text-neutral-300">Step 2</span>
-            </div>
+      <div
+        className="
+          max-w-7xl
+          mx-auto
 
-            <div className="grid grid-cols-3 gap-4">
-              {matchaMenu.map((base) => {
-                const active = selectedBase === base.id;
+          lg:h-dvh
 
-                return (
-                  <button
-                    key={base.id}
-                    onClick={() => setSelectedBase(base.id)}
-                    className={`rounded-2xl border p-5 transition-all duration-300 ${
-                      active
-                        ? "border-brand-500 bg-brand-50 shadow-lg scale-[1.02]"
-                        : "border-neutral-200 bg-neutral-white hover:border-brand-300"
-                    }`}
-                  >
-                    <Image src={base.image} alt={base.name} width={64} height={64} className="mx-auto" />
-                    <h3 className="mt-4 font-heading text-h5">{base.name}</h3>
-                    <p className="text-body-sm text-neutral-300 mt-2 line-clamp-2">{base.description}</p>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          px-3
+          lg:px-6
 
-          <div className="bg-neutral-white rounded-3xl border border-neutral-200 p-6">
-            <div className="flex flex-col lg:flex-row gap-6 items-center">
-              <Image
-                src={currentProduct.base.image}
-                alt={currentProduct.name}
-                width={140}
-                height={140}
-                className="shrink-0"
-              />
+          pt-16
+          pb-24 lg:pb-4
 
-              <div className="flex-1">
-                <span className="inline-flex rounded-full bg-brand-100 px-3 py-1 text-body-sm text-brand-700">
-                  {currentProduct.powder.name}
-                </span>
-                <h2 className="text-h3 font-heading mt-3">{currentProduct.name}</h2>
-                <p className="text-body text-neutral-300 mt-2">{currentProduct.base.description}</p>
-                <p className="text-h4 font-semibold text-brand-500 mt-5">{formatRupiah(currentProduct.price)}</p>
-              </div>
-            </div>
+          grid
 
-            <div className="flex flex-wrap items-center justify-between gap-4 mt-8">
-              <div className="flex items-center gap-3">
-                <Button variant="default" onClick={() => setQty(Math.max(1, qty - 1))}>
-                  −
-                </Button>
-                <span className="text-h4 font-semibold w-8 text-center">{qty}</span>
-                <Button variant="default" onClick={() => setQty(qty + 1)}>
-                  +
-                </Button>
-              </div>
-              <Button variant="cta" onClick={addToCart}>
-                Add to Cart
-              </Button>
-            </div>
-          </div>
-        </section>
+          lg:grid-cols-[1fr_420px]
 
-        <aside className="bg-neutral-white rounded-3xl p-6 shadow-sm border border-neutral-200 flex flex-col h-fit lg:h-full min-h-0">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="text-h3 font-heading">Your Order</h2>
-            <span className="text-body-sm text-neutral-300">
-              {cart.length} Item{cart.length !== 1 ? "s" : ""}
-            </span>
-          </div>
+          gap-4
+          text-sm
+        "
+      >
+      {/* ===========================
+    LEFT PANEL
+=========================== */}
 
-          <div className="flex-1 overflow-y-auto min-h-0">
-            {cart.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-center">
-                <div className="text-6xl mb-4">🍵</div>
-                <h3 className="font-heading text-h4">Cart is Empty</h3>
-                <p className="text-body text-neutral-300 mt-2">Add your favorite matcha to begin your order.</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {cart.map((item, index) => {
-                  const product = getMatchaProduct(item.powder, item.base)!;
+<section
+  className="
+    flex
+    flex-col
+    gap-4
 
-                  return (
-                    <div key={index} className="rounded-2xl border border-neutral-200 p-4">
-                      <div className="flex justify-between items-start gap-3">
-                        <div>
-                          <h4 className="font-semibold">{product.name}</h4>
-                          <p className="text-body-sm text-neutral-300 mt-1">{formatRupiah(product.price)}</p>
-                        </div>
-                        <button onClick={() => removeItem(index)} className="text-red-500 hover:text-red-600 text-sm">
-                          Remove
-                        </button>
-                      </div>
+    lg:overflow-y-auto
 
-                      <div className="flex items-center justify-between mt-4">
-                        <div className="flex items-center gap-2">
-                          <Button variant="default" onClick={() => updateQty(index, item.qty - 1)}>
-                            −
-                          </Button>
-                          <span className="w-8 text-center">{item.qty}</span>
-                          <Button variant="default" onClick={() => updateQty(index, item.qty + 1)}>
-                            +
-                          </Button>
-                        </div>
-                        <div className="font-semibold text-brand-500">{formatRupiah(product.price * item.qty)}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+    pr-1
+  "
+>
+  
 
-          <div className="border-t border-neutral-200 pt-5 mt-5">
-            <div className="flex justify-between items-center">
-              <span className="font-heading text-h5">Total</span>
-              <span className="text-h4 font-bold text-brand-500">{formatRupiah(total)}</span>
-            </div>
-          </div>
+  {/* ---------- Desktop ---------- */}
 
-          <div className="space-y-4 mt-6">
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your Name"
-              className="w-full rounded-2xl border border-neutral-200 px-4 py-3 outline-none focus:border-brand-500"
-            />
-            <textarea
-              rows={4}
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Additional Notes"
-              className="w-full rounded-2xl border border-neutral-200 px-4 py-3 resize-none outline-none focus:border-brand-500"
-            />
-            <Button variant="cta" className="w-full" onClick={sendWhatsapp}>
-              Order via WhatsApp
-            </Button>
-          </div>
-        </aside>
+  <div className="hidden lg:flex flex-col gap-6">
+
+    <PowderSelector
+      selected={selectedPowder}
+      onSelect={setSelectedPowder}
+    />
+
+    <BrewSelector
+      selected={selectedBase}
+      onSelect={setSelectedBase}
+    />
+
+    <ProductSummary
+      product={currentProduct}
+      qty={qty}
+      onIncrease={() => setQty(qty + 1)}
+      onDecrease={() =>
+        setQty(Math.max(1, qty - 1))
+      }
+      onAdd={addToCart}
+    />
+
+  </div>
+
+  {/* ---------- Mobile Wizard ---------- */}
+
+  <div className="lg:hidden flex-1">
+    {mobileStep === "menu" && (
+      <div className="space-y-4">
+
+        <PowderSelector
+          selected={selectedPowder}
+          onSelect={setSelectedPowder}
+        />
+
+        <BrewSelector
+          selected={selectedBase}
+          onSelect={setSelectedBase}
+        />
+
+        <ProductSummary
+          product={currentProduct}
+          qty={qty}
+          onIncrease={() => setQty(qty + 1)}
+          onDecrease={() => setQty(Math.max(1, qty - 1))}
+          onAdd={addToCart}
+        />
+
+      </div>
+    )}
+  </div>
+
+</section>
+
+{/* ===========================
+    RIGHT PANEL
+=========================== */}
+
+{/* ---------- Desktop ---------- */}
+
+<div className="hidden lg:flex flex-col min-h-0">
+
+  <OrderSummary
+    cart={cart}
+    total={total}
+
+    name={name}
+    notes={notes}
+
+    onNameChange={setName}
+    onNotesChange={setNotes}
+
+    onIncrease={increaseQty}
+    onDecrease={decreaseQty}
+    onRemove={removeItem}
+
+    onCheckout={checkout}
+  />
+
+</div>
+
+{/* ---------- Mobile Checkout ---------- */}
+
+{mobileStep === "checkout" && (
+
+  <div className="lg:hidden">
+
+    <OrderSummary
+      cart={cart}
+      total={total}
+
+      name={name}
+      notes={notes}
+
+      onNameChange={setName}
+      onNotesChange={setNotes}
+
+      onIncrease={increaseQty}
+      onDecrease={decreaseQty}
+      onRemove={removeItem}
+
+      onCheckout={checkout}
+    />
+
+  </div>
+
+)}
+
       </div>
     </main>
   );

@@ -4,6 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ===== Design Tokens ===== */
 @theme {
   /* Colors */
   --color-brand-300: #8DBE4F;
@@ -42,6 +43,7 @@
   --spacing: 0.25rem;
 }
 
+/* ===== Global Utilities ===== */
 @utility text-display {
   font-size: var(--text-display);
   line-height: 0.9;
@@ -87,6 +89,7 @@
   font-family: var(--font-sans);
 }
 
+/* ===== Animations ===== */
 @keyframes navbar-down {
   0% {
     transform: translateY(-20px);
@@ -117,11 +120,24 @@
   animation: navbar-up 0.1s ease-in;
 }
 
+/* ===== Reset & Base Styles ===== */
 html,
 body {
   height: 100%;
 }
 
+body {
+  background-color: var(--color-neutral-white);
+  color: var(--color-neutral-black);
+  font-family: var(--font-inter);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Headings ===== */
 h1, h2, h3, h4 {
   font-family: var(--font-baloo);
 }
@@ -138,17 +154,7 @@ h3 {
   font-weight: 600;
 }
 
-body {
-  background-color: var(--color-neutral-white);
-  color: var(--color-neutral-black);
-  font-family: var(--font-inter);
-}
-
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+/* ===== Element Defaults ===== */
 button {
   cursor: pointer;
 }
@@ -162,6 +168,7 @@ img {
   display: block;
 }
 
+/* ===== Selection & Typography Classes ===== */
 ::selection {
   background-color: var(--color-brand-300);
   color: var(--color-neutral-white);
@@ -297,4 +304,40 @@ img {
   html {
     @apply font-sans;
   }
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4F7F2F; /* brand-500 */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f6826;
+}
+
+/* Hilangkan tombol panah */
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Hilangkan sudut */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4F7F2F transparent;
 }
