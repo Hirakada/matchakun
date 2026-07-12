@@ -176,7 +176,7 @@ export default function OrderPage() {
   // WHATSAPP
   // ==========================
 
-  const checkout = () => {
+  const checkout = async () => {
 
     if (!name.trim()) {
 
@@ -223,15 +223,28 @@ Total : ${formatRupiah(total)}
 
 Notes : ${notes || "-"}`;
 
-    window.open(
+  try {
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message,
+      }),
+    });
 
-      `https://wa.me/6282141914171?text=${encodeURIComponent(
-        message
-      )}`,
+    if (!response.ok) {
+      throw new Error("Failed to create checkout.");
+    }
 
-      "_blank"
+    const { url } = await response.json();
 
-    );
+    window.open(url, "_blank");
+  } catch (error) {
+    console.error(error);
+    alert("Unable to open WhatsApp.");
+  }
 
   };
 
