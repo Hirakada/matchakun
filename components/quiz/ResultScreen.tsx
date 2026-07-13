@@ -152,11 +152,11 @@ export default function ResultScreen() {
         <footer className="shrink-0 border-t border-brand-100 bg-white p-5 sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row">
           <Button
-            href={`/order?powder=${recommendation.powder}&brew=${recommendation.brew}`}
+            href={`/order?recommendation=${recommendation.id}`}
             className="flex-1"
           >
             Order Sekarang
-          </Button>            
+          </Button>          
           <Button variant="default" onClick={restart} className="flex-1">
             Ulangi Matcha Quest
           </Button>
