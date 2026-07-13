@@ -3,22 +3,37 @@
 import {
   createContext,
   useContext,
-  useMemo,
   useState,
   type ReactNode,
 } from "react";
 
-import { MATCHA_QUESTIONS } from "@/data/matchaQuestions";
-import { calculateRecommendation, QuizAnswers } from "@/lib/matchaGame";
-import { MatchaProductId } from "@/data/matchaMenu";
+import {
+  MATCHA_QUESTIONS,
+} from "@/data/matchaQuestions";
+
+import {
+  getNextStep,
+  STEP_KEY,
+  STEP_MAP,
+  getProgress,
+} from "@/lib/questFlow";
+
+import {
+  calculateRecommendation,
+} from "@/lib/questRecommendation";
+
+import type {
+  QuizAnswers,
+  RecommendationResult,
+  Step,
+} from "@/lib/questTypes";
 
 type Screen = "intro" | "playing" | "result";
 
 interface QuizContextValue {
   screen: Screen;
 
-  currentQuestion: number;
-  totalQuestions: number;
+  currentStep: Step;
 
   selectedLane: number;
 
@@ -26,11 +41,11 @@ interface QuizContextValue {
 
   progress: number;
 
-  resultId: MatchaProductId | null;
+  recommendation: RecommendationResult | null;
 
   isAnimating: boolean;
 
-  question: (typeof MATCHA_QUESTIONS)[number];
+  question: (typeof MATCHA_QUESTIONS)[keyof typeof MATCHA_QUESTIONS];
 
   startGame: () => void;
 
@@ -45,9 +60,8 @@ interface QuizContextValue {
   restart: () => void;
 }
 
-const QuizContext = createContext<QuizContextValue | null>(
-  null
-);
+const QuizContext =
+  createContext<QuizContextValue | null>(null);
 
 export function QuizProvider({
   children,
@@ -57,8 +71,8 @@ export function QuizProvider({
   const [screen, setScreen] =
     useState<Screen>("intro");
 
-  const [currentQuestion, setCurrentQuestion] =
-    useState(0);
+  const [currentStep, setCurrentStep] =
+    useState<Step>("experience");
 
   const [selectedLane, setSelectedLane] =
     useState(1);
@@ -66,49 +80,41 @@ export function QuizProvider({
   const [answers, setAnswers] =
     useState<QuizAnswers>({});
 
+  const [recommendation, setRecommendation] =
+    useState<RecommendationResult | null>(null);
+
   const [isAnimating, setIsAnimating] =
     useState(false);
+
+  const currentQuestion =
+    STEP_MAP[currentStep];
 
   const question =
     MATCHA_QUESTIONS[currentQuestion];
 
-  const totalQuestions =
-    MATCHA_QUESTIONS.length;
-
   const progress =
-    ((currentQuestion + 1) /
-      totalQuestions) *
-    100;
-
-  const resultId = useMemo(() => {
-    if (screen !== "result") {
-      return null;
-    }
-
-    return calculateRecommendation(answers);
-  }, [answers, screen]);
+    getProgress(
+      currentStep,
+      answers
+    ).percentage;
 
   function startGame() {
     setScreen("playing");
   }
 
-  function moveLeft() {
+  function moveTo(
+    lane: 0 | 1 | 2
+  ) {
     if (isAnimating) return;
 
-    setSelectedLane(0);
+    setSelectedLane(lane);
   }
 
-  function moveCenter() {
-    if (isAnimating) return;
+  const moveLeft = () => moveTo(0);
 
-    setSelectedLane(1);
-  }
+  const moveCenter = () => moveTo(1);
 
-  function moveRight() {
-    if (isAnimating) return;
-
-    setSelectedLane(2);
-  }
+  const moveRight = () => moveTo(2);
 
   function selectLane(lane: number) {
     if (isAnimating) return;
@@ -128,22 +134,29 @@ export function QuizProvider({
 
     setIsAnimating(true);
 
-    setAnswers((previous) => ({
-      ...previous,
-      [question.id]: option.id,
-    }));
+    const nextAnswers = {
+      ...answers,
+      [STEP_KEY[question.id]]:
+        option.id,
+    } as QuizAnswers;
+
+    setAnswers(nextAnswers);
 
     window.setTimeout(() => {
-      const isLastQuestion =
-        currentQuestion ===
-        totalQuestions - 1;
+      const nextStep =
+        getNextStep(
+          currentStep,
+          nextAnswers
+        );
 
-      if (isLastQuestion) {
+      if (nextStep === "result") {
+        setRecommendation(
+          calculateRecommendation(nextAnswers)
+        );
+
         setScreen("result");
       } else {
-        setCurrentQuestion(
-          (previous) => previous + 1
-        );
+        setCurrentStep(nextStep);
 
         setSelectedLane(1);
       }
@@ -153,15 +166,17 @@ export function QuizProvider({
   }
 
   function restart() {
-    setScreen("intro");
-
-    setCurrentQuestion(0);
+    setCurrentStep("experience");
 
     setSelectedLane(1);
 
     setAnswers({});
 
+    setRecommendation(null);
+
     setIsAnimating(false);
+
+    setScreen("intro");
   }
 
   return (
@@ -169,20 +184,19 @@ export function QuizProvider({
       value={{
         screen,
 
-        currentQuestion,
-        totalQuestions,
+        question,
 
-        selectedLane,
-
-        answers,
+        currentStep,
 
         progress,
 
-        resultId,
+        answers,
+
+        recommendation,
+
+        selectedLane,
 
         isAnimating,
-
-        question,
 
         startGame,
 
@@ -203,7 +217,8 @@ export function QuizProvider({
 }
 
 export function useQuiz() {
-  const context = useContext(QuizContext);
+  const context =
+    useContext(QuizContext);
 
   if (!context) {
     throw new Error(

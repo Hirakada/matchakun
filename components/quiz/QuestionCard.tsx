@@ -15,7 +15,7 @@ export default function QuestionCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="mx-auto flex max-w-3xl flex-col py-4"
+      className="mx-auto flex w-full flex-col py-4"
     >
 
       <div className="flex gap-4 flex-col rounded-[2rem] border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
@@ -25,7 +25,14 @@ export default function QuestionCard() {
           </span>
         </div>
 
-        <h1 className="text-3xl leading-1em text-neutral-black sm:text-5xl lg:text-6xl">
+        <h1
+          className="
+            font-heading
+            leading-tight
+            text-neutral-black
+            text-[clamp(1.75rem,4vw,3.75rem)]
+          "
+        >
           {question.title}
         </h1>
 

@@ -51,7 +51,7 @@ export default function PlayingScreen() {
   return (
     <main
       {...swipe}
-      className="flexmin-h-full flex-col overflow-hidden justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8"
+      className="flex min-h-full max-w-4xl flex-col overflow-hidden justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8"
     >
       <GameHUD />
 

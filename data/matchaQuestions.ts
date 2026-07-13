@@ -9,40 +9,36 @@ export interface QuizOption {
   title: string;
   subtitle: string;
   emoji: string;
-
   hotkey: "A" | "S" | "D";
 }
 
 export interface QuizQuestion {
   id: QuizStep;
-
   title: string;
-
   description: string;
-
-  options: [
-    QuizOption,
-    QuizOption,
-    QuizOption
-  ];
+  options: [QuizOption, QuizOption, QuizOption];
 }
 
-export const MATCHA_QUESTIONS: QuizQuestion[] = [
-  {
+export const MATCHA_QUESTIONS: Record<
+  QuizStep,
+  QuizQuestion
+> = {
+  Experience: {
     id: "Experience",
 
-    title: "How well do you know Matcha?",
+    title: "Seberapa familiar kamu dengan Matcha?",
 
     description:
-      "Choose the lane that best describes you.",
+      "Jawabanmu membantu kami memberikan rekomendasi yang lebih sesuai.",
 
     options: [
       {
         id: "beginner",
 
-        title: "Newbie",
+        title: "Baru Pertama Kali",
 
-        subtitle: "First time trying",
+        subtitle:
+          "Belum pernah atau baru ingin mencoba Matcha.",
 
         emoji: "🌱",
 
@@ -52,9 +48,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "casual",
 
-        title: "Casual",
+        title: "Sesekali Menikmati",
 
-        subtitle: "Drink occasionally",
+        subtitle:
+          "Sesekali menikmati Matcha dan ingin mencoba lebih banyak.",
 
         emoji: "🍵",
 
@@ -64,9 +61,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "enthusiast",
 
-        title: "Enthusiast",
+        title: "Pecinta Matcha",
 
-        subtitle: "True matcha lover",
+        subtitle:
+          "Sudah terbiasa menikmati berbagai karakter Matcha.",
 
         emoji: "💚",
 
@@ -75,21 +73,22 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
     ],
   },
 
-  {
+  Dietary: {
     id: "Dietary",
 
-    title: "Do you have any dietary preferences?",
+    title: "Apakah kamu memiliki preferensi tertentu?",
 
     description:
-      "We'll adjust the recommendation for you.",
+      "Kami akan menyesuaikan rekomendasi sesuai kebutuhanmu.",
 
     options: [
       {
         id: "none",
 
-        title: "No Preference",
+        title: "Tidak Ada",
 
-        subtitle: "Everything is fine",
+        subtitle:
+          "Semua jenis minuman dapat direkomendasikan.",
 
         emoji: "✅",
 
@@ -99,9 +98,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "no_oat",
 
-        title: "Avoid Oat",
+        title: "Tanpa Oat Milk",
 
-        subtitle: "No oat milk",
+        subtitle:
+          "Kami hanya akan merekomendasikan minuman tanpa oat milk.",
 
         emoji: "🌾",
 
@@ -111,9 +111,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "skip",
 
-        title: "Skip",
+        title: "Lewati",
 
-        subtitle: "Not sure",
+        subtitle:
+          "Belum memiliki preferensi khusus.",
 
         emoji: "❔",
 
@@ -122,21 +123,23 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
     ],
   },
 
-  {
+  Texture: {
     id: "Texture",
 
-    title: "Which texture do you enjoy?",
+    title:
+      "Tekstur minuman seperti apa yang paling kamu sukai?",
 
     description:
-      "Select your favorite mouthfeel.",
+      "Pilih sensasi minum yang paling sesuai dengan seleramu.",
 
     options: [
       {
         id: "clean",
 
-        title: "Pure",
+        title: "Ringan & Murni",
 
-        subtitle: "Clean & smooth",
+        subtitle:
+          "Segar, ringan, dan fokus pada rasa asli Matcha.",
 
         emoji: "🍃",
 
@@ -146,9 +149,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "creamy_smooth",
 
-        title: "Creamy",
+        title: "Creamy & Lembut",
 
-        subtitle: "Rich & silky",
+        subtitle:
+          "Lembut, creamy, dan terasa lebih comforting.",
 
         emoji: "🥛",
 
@@ -158,9 +162,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "creamy_fresh",
 
-        title: "Cold Whisk",
+        title: "Creamy & Menyegarkan",
 
-        subtitle: "Light & refreshing",
+        subtitle:
+          "Tetap creamy tetapi terasa lebih ringan dan refreshing.",
 
         emoji: "❄️",
 
@@ -169,21 +174,23 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
     ],
   },
 
-  {
+  Flavor: {
     id: "Flavor",
 
-    title: "What flavor profile do you prefer?",
+    title:
+      "Rasa seperti apa yang paling kamu sukai?",
 
     description:
-      "Every matcha has its own personality.",
+      "Pilih karakter rasa yang paling sesuai dengan seleramu.",
 
     options: [
       {
         id: "nutty_creamy",
 
-        title: "Nutty",
+        title: "Lembut & Sedikit Manis",
 
-        subtitle: "Sweet & creamy",
+        subtitle:
+          "Rasa ringan, creamy, dan mudah dinikmati.",
 
         emoji: "🤎",
 
@@ -193,9 +200,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "balanced",
 
-        title: "Balanced",
+        title: "Seimbang & Segar",
 
-        subtitle: "Easy to enjoy",
+        subtitle:
+          "Perpaduan rasa Matcha yang pas dan mudah disukai.",
 
         emoji: "🌿",
 
@@ -205,9 +213,10 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       {
         id: "umami_bold",
 
-        title: "Umami",
+        title: "Kuat & Autentik",
 
-        subtitle: "Bold & intense",
+        subtitle:
+          "Karakter Matcha yang lebih pekat, kompleks, dan berani.",
 
         emoji: "🌊",
 
@@ -215,4 +224,4 @@ export const MATCHA_QUESTIONS: QuizQuestion[] = [
       },
     ],
   },
-];
+};

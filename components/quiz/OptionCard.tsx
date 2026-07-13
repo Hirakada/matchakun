@@ -132,8 +132,6 @@ export default function OptionCard({
             {option.title}
           </h3>
 
-          <div className="my-3 h-px w-12 bg-neutral-200" />
-
           <p className="text-sm leading-relaxed text-neutral-500">
             {option.subtitle}
           </p>

@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+
 import { cn } from "@/lib/utils";
 
 type ButtonProps = {
@@ -20,15 +22,22 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base = `
-    inline-flex w-fit items-center justify-center
+    inline-flex
+    w-fit
+    items-center
+    justify-center
+
     rounded-full
-    px-6 py-2.5
+
+    px-6
+    py-2.5
 
     text-center
     text-button
     font-medium
 
-    transition-all duration-200
+    transition-all
+    duration-200
 
     disabled:pointer-events-none
     disabled:opacity-50
@@ -38,6 +47,7 @@ export default function Button({
     hover:bg-brand-500
     hover:shadow-lg
     hover:scale-105
+
     active:scale-95
   `;
 
@@ -69,10 +79,13 @@ export default function Button({
 
       rounded-2xl
 
-      border border-neutral-200
+      border
+      border-neutral-200
 
       bg-neutral-white
-      px-5 py-4
+
+      px-5
+      py-4
 
       text-neutral-black
 
@@ -92,23 +105,42 @@ export default function Button({
   );
 
   if (href) {
+    const isExternal =
+      href.startsWith("http://") ||
+      href.startsWith("https://");
+
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={combined}
+        >
+          {children}
+        </a>
+      );
+    }
+
     return (
-      <a
+      <Link
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
         className={combined}
       >
         {children}
-      </a>
+      </Link>
     );
   }
 
-  if (asChild && React.isValidElement(children)) {
-    const child = children as React.ReactElement<{
-      className?: string;
-    }>;
-    
+  if (
+    asChild &&
+    React.isValidElement(children)
+  ) {
+    const child =
+      children as React.ReactElement<{
+        className?: string;
+      }>;
+
     return React.cloneElement(child, {
       className: cn(
         combined,

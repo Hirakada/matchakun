@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 import {
   getMatchaProduct,
@@ -21,6 +22,14 @@ import {
 } from "@/components/order/types";
 
 export default function OrderPage() {
+
+  const searchParams = useSearchParams();
+
+  const powder =
+    searchParams.get("powder");
+
+  const brew =
+    searchParams.get("brew");
 
   // ==========================
   // MOBILE STEP
@@ -55,6 +64,20 @@ export default function OrderPage() {
 
   const [selectedBase, setSelectedBase] =
     useState<MatchaBase["id"]>("latte");
+  
+  useEffect(() => {
+    if (powder) {
+      setSelectedPowder(
+        powder as MatchaPowder["id"]
+      );
+    }
+
+    if (brew) {
+      setSelectedBase(
+        brew as MatchaBase["id"]
+      );
+    }
+  }, [powder, brew]);
 
   const [qty, setQty] = useState(1);
 

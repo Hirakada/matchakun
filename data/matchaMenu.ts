@@ -18,7 +18,7 @@ export const matchaMenu: MatchaBase[] = [
     description:
       "Matcha tradisional yang disajikan ringan dengan campuran matcha dan air, menghasilkan rasa yang halus, bersih, dan autentik.",
     ingredients: ["Matcha", "Air"],
-    image: `/images/usucha.png?v=${IMAGE_VERSION}`,
+    image: `/images/usucha.webp?v=${IMAGE_VERSION}`,
     price: 0,
   },
   {
@@ -27,7 +27,7 @@ export const matchaMenu: MatchaBase[] = [
     description:
       "Perpaduan matcha, susu oat, dan air yang menciptakan rasa creamy, lembut, dan lebih ramah bagi penikmat matcha modern.",
     ingredients: ["Matcha", "Susu Oat", "Air"],
-    image: `/images/latte.png?v=${IMAGE_VERSION}`,
+    image: `/images/latte.webp?v=${IMAGE_VERSION}`,
     price: 10000,
   },
   {
@@ -36,7 +36,7 @@ export const matchaMenu: MatchaBase[] = [
     description:
       "Matcha yang dikocok dengan susu oat dalam sajian dingin, memberikan sensasi segar dengan rasa yang tetap kuat dan creamy.",
     ingredients: ["Matcha", "Susu Oat"],
-    image: `/images/coldwhisk.png?v=${IMAGE_VERSION}`,
+    image: `/images/coldwhisk.webp?v=${IMAGE_VERSION}`,
     price: 15000,
   },
 ];
@@ -57,7 +57,7 @@ export const matchaPowders: MatchaPowder[] = [
     name: "Kaze",
     description: "Light, nutty, dan creamy — cocok untuk pemula.",
     notes: ["Nutty", "Aromatic", "Creamy"],
-    price: 15000,
+    price: 17000,
   },
   {
     id: "nami",

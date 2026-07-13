@@ -2,25 +2,34 @@
 
 import { motion } from "framer-motion";
 
+import { Step } from "@/lib/matchaLogic";
+
 import { useQuiz } from "./QuizProvider";
+
+const STEP_TITLE: Record<Step, string> = {
+  experience: "Pengenalan",
+  dietary: "Preferensi",
+  texture: "Tekstur",
+  flavor: "Flavor Profile",
+};
 
 export default function GameHUD() {
   const {
     progress,
-    currentQuestion,
-    totalQuestions,
+    currentStep,
   } = useQuiz();
 
   return (
-    <header className="w-full">
+    <header className="w-full max-w-4xl mx-auto">
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-600">
               Matcha Quest
             </p>
+
             <p className="mt-1 text-sm text-neutral-500 truncate">
-              Step {currentQuestion + 1} of {totalQuestions}
+              {STEP_TITLE[currentStep]}
             </p>
           </div>
 
@@ -44,8 +53,12 @@ export default function GameHUD() {
 
         <div className="overflow-hidden rounded-full bg-neutral-200">
           <motion.div
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.4 }}
+            animate={{
+              width: `${progress}%`,
+            }}
+            transition={{
+              duration: 0.4,
+            }}
             className="h-2 rounded-full bg-brand-500"
           />
         </div>
