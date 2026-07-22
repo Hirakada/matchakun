@@ -71,7 +71,7 @@ export const matchaPowders: MatchaPowder[] = [
     name: "Roku",
     description: "Balanced, creamy, dan umami — paling premium.",
     notes: ["Nutty", "Umami", "Creamy", "Balanced"],
-    price: 28000,
+    price: 30000,
   },
 ];
 
