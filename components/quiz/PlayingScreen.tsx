@@ -45,7 +45,6 @@ export default function PlayingScreen() {
 
     onRight: moveRight,
 
-    onTap: () => confirmSelection(),
   });
 
   return (
